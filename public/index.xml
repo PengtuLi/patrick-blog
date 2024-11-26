@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>My New Hugo Site</title>
+        <link>http://localhost:1313/</link>
+        <description>Recent content on My New Hugo Site</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title></title>
+        <link>http://localhost:1313/posts/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/transformer%E7%9B%B8%E5%85%B3/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/posts/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/transformer%E7%9B%B8%E5%85%B3/</guid>
+        <description>&lt;h2 id=&#34;演化&#34;&gt;演化
+&lt;/h2&gt;&lt;h3 id=&#34;encoder-block&#34;&gt;encoder block
+&lt;/h3&gt;&lt;p&gt;![[Pasted image 20241014195952.png]]阿萨德=&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;512token length&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;decoder-block&#34;&gt;decoder block
+&lt;/h3&gt;&lt;p&gt;![[Pasted image 20241014200113.png]]&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;mask future token&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;decoder-only-block&#34;&gt;decoder-only block
+&lt;/h3&gt;&lt;p&gt;![[Pasted image 20241014201127.png]]&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;without that second self-attention layer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;self-attention&#34;&gt;self-attention
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Query: The query is a representation of the current word used to score against all the other words (using their keys).&lt;/li&gt;
+&lt;li&gt;Key: Key vectors are like &lt;strong&gt;labels&lt;/strong&gt; for all the words in the segment. They’re what we match against in our search for relevant words.&lt;/li&gt;
+&lt;li&gt;Value: Value vectors are &lt;strong&gt;actual word representations&lt;/strong&gt;,&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;很形象的理解：A crude analogy is to think of it like searching through a filing cabinet. The query is like a &lt;strong&gt;sticky note with the topic you’re researching.&lt;/strong&gt; The keys are like the &lt;strong&gt;labels of the folders&lt;/strong&gt; inside the cabinet. When you match the tag with a sticky note, we &lt;strong&gt;take out the contents of that folder&lt;/strong&gt;, these contents are the value vector. Except you’re not only looking for one value, but a &lt;strong&gt;blend of values from a blend of folders&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;![[Pasted image 20241014203827.png]]&lt;/p&gt;
+&lt;p&gt;==step:==&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;projection &lt;code&gt;key_embed&lt;/code&gt; * &lt;code&gt;W_q W_k W_v&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;score 投影后的vector算score&lt;/li&gt;
+&lt;li&gt;sum score与value乘再相加&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;maks-self-attention&#34;&gt;maks self-attention
+&lt;/h4&gt;&lt;p&gt;![[Pasted image 20241014211627.png]]
+![[Pasted image 20241014212602.png]]&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;train中作为一个batch&lt;code&gt;并行处理&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;==这里每一行的score都是还没有sum的时候，代表最后的token对各token的score==&lt;/li&gt;
+&lt;li&gt;score &amp;ndash;&amp;gt; softmax&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;What this scores table means is the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;When the model processes the first example in the dataset (row #1), which contains only one word (“robot”), 100% of its attention will be on that word.&lt;/li&gt;
+&lt;li&gt;When the model processes the second example in the dataset (row #2), which contains the words (“robot must”), when it processes the word “must”, 48% of its attention will be on “robot”, and 52% of its attention will be on “must”.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;muti-head&#34;&gt;muti-head
+&lt;/h3&gt;&lt;p&gt;step：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;可以理解为&lt;code&gt;W_q W_k W_v&lt;/code&gt;扩大&lt;code&gt;num_of_head&lt;/code&gt;倍，得倒&lt;code&gt;num_of_head&lt;/code&gt; * &lt;code&gt;num_of_qkv&lt;/code&gt;个qkv&lt;/li&gt;
+&lt;li&gt;每个Head单独做score，sum&lt;/li&gt;
+&lt;li&gt;所有head结果concate再projection回原来的维度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;score-probability&#34;&gt;score probability
+&lt;/h2&gt;&lt;p&gt;最后一个token经过docoder layer后的结果(vector)与vocab embedding(matrix)相乘，得到每个单词对应的分数。&lt;/p&gt;
+&lt;p&gt;上述即为一个iter。&lt;/p&gt;
+&lt;p&gt;如何选择word？&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;top_k+sample prob&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
