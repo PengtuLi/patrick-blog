@@ -1,4 +1,8 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://patrickli.life/'
 languageCode = 'en-us'
-title = 'My New Hugo Site'
+title = "patrick's blog"
 theme = 'hugo-theme-stack'
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
