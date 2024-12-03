@@ -1,8 +1,5 @@
 baseURL = 'https://patrickli.life/'
 languageCode = 'en-us'
+defaultContentLanguage = "en"
 title = "patrick's blog"
 theme = 'hugo-theme-stack'
-[markup]
-  [markup.goldmark]
-    [markup.goldmark.renderer]
-      unsafe = true
