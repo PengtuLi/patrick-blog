@@ -10,7 +10,7 @@ tags = [
     "themes",
 ]
 categories = [
-    "themes",
+    "test",
     "syntax",
 ]
 series = ["Themes Guide"]
