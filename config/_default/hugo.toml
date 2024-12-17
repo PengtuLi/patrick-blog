@@ -1,5 +1,5 @@
 baseURL = 'https://patrickli.life/'
 languageCode = 'en-us'
 defaultContentLanguage = "en"
-title = "patrick's blog"
+title = "图图的blog"
 theme = 'hugo-theme-stack'

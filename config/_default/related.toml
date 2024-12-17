@@ -2,11 +2,3 @@
 includeNewer = true
 threshold = 60
 toLower = false
-
-# [[indices]]
-# name = "tags"
-# weight = 2
-
-[[indices]]
-name = "categories"
-weight = 1
