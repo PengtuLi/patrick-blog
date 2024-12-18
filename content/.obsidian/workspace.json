@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "c9fb88e4e40d634f",
+        "id": "90cd04f1f0100741",
         "type": "tabs",
         "children": [
           {
-            "id": "fd764f0f70fc9938",
+            "id": "f7eaeeaadb36c353",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "post/2024-12/2024-12-18-hugging-face-download-model/index.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "index"
+              "title": "New tab"
             }
           }
         ]
@@ -93,7 +89,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "post/2024-12/2024-12-18-hugging-face-download-model/index.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +98,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for index"
+              "title": "Backlinks"
             }
           },
           {
@@ -112,12 +107,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "post/2024-12/2024-12-18-hugging-face-download-model/index.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from index"
+              "title": "Outgoing links"
             }
           },
           {
@@ -138,11 +132,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "post/2024-12/2024-12-18-hugging-face-download-model/index.md"
-              },
+              "state": {},
               "icon": "lucide-list",
-              "title": "Outline of index"
+              "title": "Outline"
             }
           }
         ]
@@ -162,8 +154,10 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "fd764f0f70fc9938",
+  "active": "f7eaeeaadb36c353",
   "lastOpenFiles": [
+    "categories/server/_index.md",
+    "categories/server",
     "post/2024-12/2024-12-18-hugging-face-download-model/index.md",
     "post/2024-12/2024-12-18-hugging-face-download-model"
   ]

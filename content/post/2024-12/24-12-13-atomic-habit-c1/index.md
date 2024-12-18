@@ -9,7 +9,7 @@ math: true
 hidden: false
 comments: true
 draft: false
-categories : []
+categories : ["readind"]
 ---
 
 水水水水
