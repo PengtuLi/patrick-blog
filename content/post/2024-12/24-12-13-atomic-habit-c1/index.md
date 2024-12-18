@@ -2,7 +2,7 @@
 title: "Atomic Habit C1"
 description: 
 date: 2024-12-18
-image: /img/avatar.png
+image: img/avatar.png
 math: true
 hidden: false
 comments: true
@@ -13,5 +13,5 @@ categories: [
 ]
 ---
 
-![ss]("./test.png")
+![ss](asd-sss.png)
 asdsss

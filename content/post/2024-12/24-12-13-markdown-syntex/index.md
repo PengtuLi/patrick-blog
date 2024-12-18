@@ -6,7 +6,7 @@ description = "Sample article showcasing basic Markdown syntax and formatting fo
 categories = [
     "Build Site"
 ]
-image = "asd.png"
+image = "cover.png"
 math = true
 +++
 
