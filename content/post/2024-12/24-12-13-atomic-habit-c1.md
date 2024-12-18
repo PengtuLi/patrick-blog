@@ -1,13 +1,16 @@
 ---
-title: "原子习惯第一章"
+title: "Atomic Habit C1"
 description: 
-date: "2024-12-03"
-image: "images/cover.png"
-categories : [
-    "Reading"
+date: 2024-12-18
+image: cover.png
+math: true
+hidden: false
+comments: true
+draft: false
+author : tutu
+categories: [
+    "reading"
 ]
 ---
 
-## reading
-
-asd 
+asdsss
