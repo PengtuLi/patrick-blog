@@ -1,5 +1,5 @@
 ---
-title: "24 12 13 Atomic Habit C1"
+title: "Atomic Habit C1"
 author : "tutu"
 description:
 date: '2024-12-18'
@@ -9,7 +9,7 @@ math: true
 hidden: false
 comments: true
 draft: false
-categories : ["readind"]
+categories : ["reading"]
 ---
 
 水水水水
