@@ -2,7 +2,7 @@
 title: "Atomic Habit C1"
 author : "tutu"
 description:
-date: '2024-12-18'
+date: '2024-12-17'
 lastmod: '2024-12-18'
 image:
 math: true
@@ -12,4 +12,6 @@ draft: false
 categories : ["reading"]
 ---
 
-水水水水
+
+阅读书的一些感想
+---
