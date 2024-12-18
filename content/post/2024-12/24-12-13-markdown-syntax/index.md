@@ -2,7 +2,7 @@
 author = "Hugo Authors"
 title = "Markdown Syntax Guide"
 date = "2019-03-11"
-lastUpdated = "2024-12-11"
+lastmod = "2024-12-11"
 description = "Sample article showcasing basic Markdown syntax and formatting for HTML elements."
 categories = [
     "Build Site"
@@ -10,6 +10,7 @@ categories = [
 image = "cover.png"
 math = true
 author = tutu
+license: CC BY-NC-ND
 +++
 
 This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.
