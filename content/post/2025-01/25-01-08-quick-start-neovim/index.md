@@ -14,17 +14,12 @@ categories : ["tool"]
 
 最近想试一试从vs code切换到vim，简单介绍一下从Mac安装neovim及其插件的过程
 
-## tabby
-
-也顺便换一下Mac自带的终端，太丑了，采用tabby,mac还有一个终端替代iterm2，tabby比较美观，但是占用大
-
-> Tabby is an infinitely customizable cross-platform terminal app for local shells, serial, SSH and Telnet connections.
-
-`brew install tabby`
-
 ## ghostty
 
 这个终端也不错，比较简洁,最后采用了这个终端
+
+新的终端linux没集成，ssh的时候需要设置一下环境变量(TERM=xterm-256color)
+https://ghostty.org/docs/help/terminfo
 
 ```raw
 快捷键：
@@ -40,6 +35,7 @@ super+end: 滚动到底部
 super+t: 新建标签页
 super+n: 新建窗口
 super+w: 关闭当前（标签页或分割窗口）
+Super+Shift+W：关闭窗口
 
 super+enter: 切换全屏模式
 
@@ -71,10 +67,6 @@ The tldr pages are a community effort to simplify the beloved man pages with pra
 > Then you have direct access to simplified, easy-to-read help for commands, such as tar, accessible through typing tldr tar instead of the standard man tar.
 
 使用很简单：tldr就行
-
-## yazi
-
-
 
 ## oh my zsh
 
@@ -135,4 +127,6 @@ install:`brew install neovim`
 nvim进入nvim,就会自动安装配置的插件了，我们也有一个基础的配置了，这些配置在init.lua中。
 {{</notice>}}
 
+![nvim](nvim.png)
 
+撒花！

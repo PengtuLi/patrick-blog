@@ -1,8 +1,8 @@
 ---
 author : "tutu"
 title : "Markdown Syntax Guide"
-date : "2019-03-11"
-lastmod : "2024-12-11"
+date : "2024-12-13"
+lastmod : "2024-12-13"
 description : "Sample article showcasing basic Markdown syntax and formatting for HTML elements."
 categories : [
     "Build Site"
@@ -147,7 +147,13 @@ $$
 
 ## Shortcode
 
+{{<notice warning>}}
+这是告诫! 请注意!
+{{< /notice >}}
 
+{{<notice tip>}}
+This is a very good tip.
+{{</notice>}}
 
 {{<bilibili BV15p411R73R>}}
 
