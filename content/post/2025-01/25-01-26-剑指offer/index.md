@@ -1,5 +1,5 @@
 ---
-title: "25Test"
+title: "剑指offer"
 author : "tutu"
 description:
 date: '2025-01-27'
@@ -9,7 +9,7 @@ math: true
 hidden: false
 comments: true
 draft: false
-categories : ['tool']
+categories : ['leetcode']
 ---
 
 - 剑指offer
@@ -17,3 +17,4 @@ categories : ['tool']
 本博客是对剑指offer本书的笔记
 
 {{%md "./c1-interview.md"%}}
+
