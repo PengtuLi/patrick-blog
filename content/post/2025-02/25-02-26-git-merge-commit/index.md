@@ -42,20 +42,16 @@ pick mno345 Commit message 5
 
 保存并关闭编辑器后，Git 会打开另一个编辑器，让你编辑合并后的 commit 消息。你可以保留或修改这些消息。
 
-## SS
+## git reset
 
-方法二：使用 git reset 和 git commit --amend
-重置到某个 commit：
+- 重置到某个 commit：
+
 假设你想合并最近的 5 个 commit，可以运行：
 
-bash
-复制
 git reset --soft HEAD~5
+
 这会将 HEAD 移动到第 5 个 commit 之前，但保留工作目录和暂存区的更改。
 
-提交更改：
-运行以下命令将更改提交为一个新的 commit：
+- 提交更改：
 
-bash
-复制
 git commit -m "Combined commit message"
