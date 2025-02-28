@@ -3,7 +3,7 @@ title: "Quick Start Neovim"
 author : "tutu"
 description:
 date: '2025-01-08'
-lastmod: '2025-01-08'
+lastmod: '2025-02-28'
 image:
 math: true
 hidden: false
@@ -30,12 +30,13 @@ super+page_up: 向上翻页。
 super+page_down: 向下翻页。
 super+home: 滚动到顶部
 super+end: 滚动到底部
+option+left mouse：在命令中移动指针
 
 # 窗口管理
 super+t: 新建标签页
 super+n: 新建窗口
 super+w: 关闭当前（标签页或分割窗口）
-Super+Shift+W：关闭窗口
+super+Shift+W：关闭窗口
 
 super+enter: 切换全屏模式
 
