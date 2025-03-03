@@ -1,5 +1,5 @@
 ---
-title: "Vim Basic Usage"
+title: "NeoVim Basic Usage"
 author : "tutu"
 description:
 date: '2025-01-14'
