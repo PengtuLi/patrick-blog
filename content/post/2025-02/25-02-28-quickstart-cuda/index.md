@@ -36,23 +36,25 @@ int main()
 ```
 
 接下来运行
+
 ```bash
 nvcc hello.cu -o hello
 ./hello
 ```
 
 我们介绍两个基础知识:
+
 - cuda 显存管理
 - cuda 线程管理
 
 显存管理:这部分和c的内存管理差不多
 
-|标准C函数	|CUDA C 函数	|说明           |
+|标准C函数 |CUDA C 函数 |说明           |
 |-|-|-|
-|malloc	|cudaMalloc	|在CPU/GPU 申请内存     |
-|memset	|cudaMemset	|为新内存做初始化        | 
-|memcpy	|cudaMemcpy	|CPU/GPU之间的数据传输   |
-|free	|cudaFree	|释放CPU/GPU内存        |
+|malloc |cudaMalloc |在CPU/GPU 申请内存     |
+|memset |cudaMemset |为新内存做初始化        |
+|memcpy |cudaMemcpy |CPU/GPU之间的数据传输   |
+|free |cudaFree |释放CPU/GPU内存        |
 
 线程管理:解释了<<<1,1>>>是什么意思
 
@@ -269,6 +271,7 @@ int main(int argc,char **argv)
 我们可以用nsight system看一下kernel/cpu执行的timeline
 
 install in unbuntu
+
 ```bash
 apt update
 apt install -y --no-install-recommends gnupg
@@ -295,6 +298,7 @@ sumMatrixOnGPU<<<(512,512),(32,32)>>>elapsed 0.004298 sec
 ![v100](v100_arch.png)
 
 以v100 Volta架构为例，由以下组成：
+
 - PCI-Express Host Interface : 主机接口用于将 GPU 连接到 CPU
 - Giga Thread : 全局调度器，用于将线程块分发给 SM 线程调度器
 - 核心部分：6个GPC( GPU Processing Clusters)，每个GPC里面包含7个TPC(Texture Processing Clusters)，每个TPC又包含2个SM(StreamingMultiprocessors)
@@ -307,6 +311,7 @@ GPU里最重要的就是SM，即流处理器
 ![sm](sm_arch.png)
 
 SM被分为4个子块，所有子块共享L1数据cache、L1指令cache,每个子块又由下列组件组成：
+
 - L0 Instruction Cache (指令缓存)
 - Warp Scheduler模块负责warp调度，一个warp由32个线程组成，warp调度器的指令通过Dispatch Units送到Core执行。
 - Register File(寄存器)
@@ -342,7 +347,7 @@ SM被分为4个子块，所有子块共享L1数据cache、L1指令cache,每个�
 3. share memory
 
 在核函数中使用如下修饰符的内存，称之为共享内存：
-__share__
+**share**
 
 每个SM都有一定数量的由线程块分配的共享内存，共享内存跟主存相比，速度要快很多，类似于L1 cache，但是可以被编程。
 

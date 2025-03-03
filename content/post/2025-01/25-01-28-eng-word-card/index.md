@@ -1,5 +1,6 @@
 
 ---
+
 title: "Eng Word Card"
 author : "tutu"
 description:
@@ -16,6 +17,7 @@ categories : ['eng']
 暂时COPY了一下以前的笔记
 
 ## word
+
 ```raw
 physiology 生理学
 contradiction 矛盾
@@ -213,7 +215,9 @@ replenish 补充
 
 
 ```
+
 ## phase
+
 ```raw
 
 ```

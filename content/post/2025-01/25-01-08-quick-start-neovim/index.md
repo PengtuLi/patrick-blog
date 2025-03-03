@@ -19,7 +19,7 @@ categories : ["tool"]
 这个终端也不错，比较简洁,最后采用了这个终端
 
 新的终端linux没集成，ssh的时候需要设置一下环境变量(TERM=xterm-256color)
-https://ghostty.org/docs/help/terminfo
+<https://ghostty.org/docs/help/terminfo>
 
 ```raw
 快捷键：
@@ -74,6 +74,7 @@ The tldr pages are a community effort to simplify the beloved man pages with pra
 >Oh My Zsh is a delightful, open source, community-driven framework for managing your Zsh configuration. It comes bundled with thousands of helpful functions, helpers, plugins, themes, and a few things that make you shout...
 
 install:
+
 ```zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
@@ -82,6 +83,7 @@ theme:choose powerlevel10k
 >Powerlevel10k is a theme for Zsh. It emphasizes speed, flexibility and out-of-the-box experience.
 
 install:
+
 ```zsh
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 change ~/.zshrc to ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -92,6 +94,7 @@ change ~/.zshrc to ZSH_THEME="powerlevel10k/powerlevel10k"
 如果需要额外配置可以修改`~/.zshrc`和`~/.p10kzsh`
 
 接下来我们安装3个zsh插件
+
 ```shell
 - zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting

@@ -13,15 +13,9 @@ categories : ["deep learning"]
 ---
 ## key
 
-  
-
 `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`
 
-  
-
 ## 下载模型
-
-  
 
 - 从网页直接下载
 
@@ -125,8 +119,6 @@ hf_hub_download(
 
 ```
 
-  
-
 ## Q: Facing SSL Error with Huggingface
 
 - 好用
@@ -148,8 +140,6 @@ pip install urllib3==1.25.11
 os.environ["CURL_CA_BUNDLE"]=""
 
 ```
-
-  
 
 huggingface.co now has a bad SSL certificate, your lib internally tries to verify it and fails. By adding the env variable, you basically disabled the SSL verification.
 

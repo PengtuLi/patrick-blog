@@ -17,12 +17,14 @@ categories : ['proxy']
 目前可行的方法是通过学校提供的easyconnect软件进行流量转发,使用的应该是ssh隧道，但是每次使用都要登陆以及随机验证码验证，十分不方便，而且休眠后连接就会终端。
 
 个人设备：
+
 - 内网服务器一台，无公网ip，配置了ssh服务
 - 内网主机一台，无公网ip，配置了todesk远程桌面
 - 外网笔记本一台，无公网ip
 - 云服务器一台，有公网ip
 
 经过调研，可行的方案：
+
 1. 通过内网穿透（如frp），反向代理到云服务器，外网笔记本访问云服务器去访问内网服务器[^1]
 2. 通过ssh反向代理
 
@@ -30,9 +32,9 @@ categories : ['proxy']
 
 ### 内网穿透
 
-这里采用开源的内网穿透工具frp：https://github.com/fatedier/frp
+这里采用开源的内网穿透工具frp：<https://github.com/fatedier/frp>
 
-参考示例：https://gofrp.org/zh-cn/docs/examples/ssh/
+参考示例：<https://gofrp.org/zh-cn/docs/examples/ssh/>
 
 > frp 是一款高性能的反向代理应用，专注于内网穿透。它支持多种协议，包括 TCP、UDP、HTTP、HTTPS 等，并且具备 P2P 通信功能。使用 frp，您可以安全、便捷地将内网服务暴露到公网，通过拥有公网 IP 的节点进行中转。
 
@@ -46,21 +48,24 @@ categories : ['proxy']
 记得云服务器设置安全组，开启端口哦。开启后可以telnet检查一下是否可以tcp连接开启的端口
 {{</notice>}}
 
-在这里下载二进制版本：https://github.com/fatedier/frp/releases
-- https://github.com/fatedier/frp/releases/download/v0.61.1/frp_0.61.1_linux_amd64.tar.gz
-- https://github.com/fatedier/frp/releases/download/v0.61.1/frp_0.61.1_windows_amd64.zip
+在这里下载二进制版本：<https://github.com/fatedier/frp/releases>
+
+- <https://github.com/fatedier/frp/releases/download/v0.61.1/frp_0.61.1_linux_amd64.tar.gz>
+- <https://github.com/fatedier/frp/releases/download/v0.61.1/frp_0.61.1_windows_amd64.zip>
 
 解压下载的压缩包。
 将 frpc 复制到内网服务所在的机器上。
 将 frps 复制到拥有公网 IP 地址的机器上，并将它们放在任意目录。
 
 开始使用:
+
 - 编写配置文件，目前支持的文件格式包括 TOML/YAML/JSON，旧的 INI 格式仍然支持，但已经不再推荐。
 - 使用以下命令启动服务器：./frps -c ./frps.toml。
 - 使用以下命令启动客户端：./frpc -c ./frpc.toml。
 - 如果需要在后台长期运行，建议结合其他工具，如 systemd 和 supervisor。
 
 配置frps.toml
+
 ```toml
 bindPort = 7000 # 必用：frp的默认监听端口
 
@@ -87,6 +92,7 @@ auth.token = "xxx" #Token 用于客户端和服务端的身份认证，自由设
 {{</notice>}}
 
 配置./frpc.toml
+
 ```toml
 serverAddr = "xxxx"
 serverPort = 7000
@@ -102,6 +108,7 @@ remotePort = 12000
 ```
 
 经过测试这套配置我在家是可以穿透的，但是不知道为什么在校园网无法内网穿透，报错，
+
 ```raw
 PS C:\Users\37359\Downloads\frp_0.61.1_windows_amd64 .\frpc.exe -c .\frpc.toml
 2025-01-09 19:51:21.685 [I] [sub/root.go:142] start frpc service for config file [.\frpc.toml]
@@ -112,6 +119,7 @@ login to the server failed: i/o deadline reached. With loginFailExit enabled, no
 ```
 
 在服务端也是没有log连接请求的，应该是校园网拦截了这个tcp链接，这个问题折腾了我很久。
+
 - 默认是启用了tls的，但是没有效果
 - 考虑使用KCP协议
 - 考虑使用QUIC协议
@@ -119,6 +127,7 @@ login to the server failed: i/o deadline reached. With loginFailExit enabled, no
 发现这两种协议可以成功！
 
 更新后的配置：
+
 ```toml
 # frps.toml
 bindPort = 7000 # 必用：frp的默认监听端口
@@ -170,7 +179,6 @@ remotePort = 10000
 frps.toml 和 frpc.toml 中
 tcpMux默认已开启
 {{</notice>}}
-
 
 #### 通过SSH访问内网机器
 
@@ -228,10 +236,11 @@ sudo systemctl enable frps
 ### ui更改配置，直接使用
 
 可以打开
+
 - x.x.x.x:7001 查看链接情况
 - x.x.x.x:7002 修改客户端配置，保存完成后即可使用
 
-[^1]:https://gofrp.org/zh-cn/docs/features/common/load-balancer/
+[^1]:<https://gofrp.org/zh-cn/docs/features/common/load-balancer/>
 
 ### 注意
 
@@ -241,7 +250,7 @@ sudo systemctl enable frps
 目前还没查清楚原因
 
 {{<notice warning>}}
-https://github.com/fatedier/frp/issues/2860
+<https://github.com/fatedier/frp/issues/2860>
 
 前两天在学校服务器装了frp，然后被报我们服务器在攻击其他平台，网络中心老师直接把网段封了。现在申请的服务器被回收了，难受啊，不知道是不是frp的问题，当时腾讯云报病毒我还没在意，安全意识薄弱啊
 
@@ -253,6 +262,7 @@ releases下载的frp是安全的，所以可能有以下原因
 - ~服务器内其他软件发起的攻击~
 
 解决：
+
 1. 公网机限制
 如果使用了FRP，可以在公网机上使用fail2ban、或者防火墙之类的，禁止国外的IP以及不停重复请求的IP。花生壳也有这样的服务，不过是付费的，花点钱也可以解决。
 

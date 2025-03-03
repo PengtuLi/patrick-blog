@@ -26,8 +26,8 @@ ss -tulnp | grep xx
 ifconfig
 ```
 
-
 ---
+
 ## 查询手册命令
 
 ```bash
@@ -36,6 +36,7 @@ info xxx
 ```
 
 ---
+
 ## 压缩
 
 ```bash
@@ -47,7 +48,8 @@ zip xxx
 unzip xxx
 ```
 
---- 
+---
+
 ## 磁盘
 
 ```bash

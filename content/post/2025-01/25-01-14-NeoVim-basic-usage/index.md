@@ -13,12 +13,14 @@ categories : ['tool']
 ---
 
 参考资料：
-- https://learnxinyminutes.com/vim/
+
+- <https://learnxinyminutes.com/vim/>
 - vim自带教程：vimtutor
-- https://www.youtube.com/watch?v=KYDG3AHgYEs&t=2s
+- <https://www.youtube.com/watch?v=KYDG3AHgYEs&t=2s>
 - ...
 
 ## mode of vim
+
 - Normal Mode - vim starts up in this mode, used to navigate and write commands
 - Insert Mode - used to make changes in your file
 - Visual Mode - used to highlight text and do operations to them
@@ -49,9 +51,11 @@ x   # Delete character under current cursor position
 u   # Undo
 CTRL+R  # Redo
 ```
+
 ## The 'Grammar' of vim
 
 **Vim can be thought of as a set of commands in a 'Verb-Modifier-Noun' format, where:**
+
 1. Verb - your action
 3. Modifier - how you're doing your action
 2. Noun/Motion - the object on which your action acts on
@@ -141,9 +145,8 @@ f<                  # Jump forward and land on < in a line
 t<                  # Jump forward and land right before < in a line
 ```
 
-
-
 代整理
+
 ```raw
 >                 # Indent selection by one block
 <                 # Dedent selection by one block
@@ -184,6 +187,7 @@ zk                # Move to the end of the previous fold
 ## plugin
 
 - neotree
+
 ```raw
 :neotree,\          # open neotree
 a,r,d             # new,rename,delete

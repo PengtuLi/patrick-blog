@@ -17,6 +17,7 @@ categories : ['deep learning']
 ## 简介
 
 机器学习框架的目标
+
 - 神经网络编程（定义网络结构）
 - 自动微分
 - 数据处理
@@ -55,6 +56,7 @@ categories : ['deep learning']
 抽象编程接口设计（以mindspore.nn.Cell为例，类似torch.nn.Module）
 
 作用：将神经网络层抽象出一个基类，所有的神经网络层都继承基类来实现
+
 - 子类可以是层结构
 - 也可以是模型结构（层链接）
 
@@ -68,6 +70,7 @@ categories : ['deep learning']
 ### C/C++编程接口
 
 实现一个GPU算子：
+
 - Primitive注册：在抽象借口这一层注册算子原语，实现初始化，校验输入输出等
 - GPU Kernel实现：在C语言后端层次，实现算子逻辑，继承GpuKernel类
 - GPU Kernel注册：将GPU Kernel及必要信息注册给框架，由框架完成对GPU Kernel的调用，实例化GPU Kernel class模板类。
@@ -83,4 +86,3 @@ categories : ['deep learning']
 其实函数式与非函数式编程之间的隔阂并不大，把一个有状态的函数的状态也作为函数的参数，新的函数就是没有状态的纯函数了。
 
 例如`y=model(x)`就不是无状态的，因为model包含了函数参数，应该修改为`y=model(x,params)`
-
