@@ -21,7 +21,9 @@ ggml是一个用 C 和 C++ 编写、专注于 Transformer 架构模型推理的�
 
 - ggml_context: 一个装载各类对象 (如张量、计算图、其他数据) 的“容器”。
 
-  对于ggml框架来说，无论要做什么（建立modle模型、建立计算图、还是创建承载计算结果的result）都需要先创建一个context作为容器，并将创建的结构体保存在context里（不包括实际数据本身，数据通过结构体里的指针索引）。
+  对于ggml框架来说，无论要做什么（建立modle模型、建立计算图、还是创建承载计算结果的result）都需要先创建一个context作为容器，并将创建的结构体保存在context里（不包括实际数据本身，数据通过结构体里的指针索引）。实际数据的存储位置是由sched调度器与backend buffer后端缓冲所管理存放的
+
+  所以在后续的计算中，我们只需要拿到ctx，就能拿到所有的信息列表，然后经过查找，就可以得到实际数据的存储指针、数据类型等信息。
 
   ![ggml_context](ggml_context.png)
 
@@ -135,6 +137,9 @@ int main(void) {
 对于gpu上的执行该矩阵乘法：
 <https://github.com/ggerganov/ggml/blob/6c71d5a071d842118fb04c03c4b15116dff09621/examples/simple/simple-backend.cpp>
 
+一个好的示例mnist：
+https://github.com/ggml-org/ggml/blob/master/examples/mnist/README.md
+
 ## gguf格式
 
 gguf特性：
@@ -185,9 +190,7 @@ model_instance.set_vocab()           # 进行词表转换，llama.cpp将词表�
 1. 先添加模型名称，参考
 <https://github.com/ggml-org/llama.cpp/blob/master/convert_hf_to_gguf_update.py>
 
-如添加opt则
-{"name": "opt-6.7b","tokt": TOKENIZER_TYPE.BPE, "repo": "<https://huggingface.co/facebook/opt-6.7b>", }
-添加完后需要运行convert_hf_to_gguf_update
+如添加opt则{"name": "opt-6.7b","tokt": TOKENIZER_TYPE.BPE, "repo": "<https://huggingface.co/facebook/opt-6.7b>", }添加完后需要运行convert_hf_to_gguf_update
 
 ```
 # Instructions:
@@ -207,21 +210,67 @@ model_instance.set_vocab()           # 进行词表转换，llama.cpp将词表�
 
 ### 运行
 
+```bash
 获取guuf格式模型后，编译llama.cpp，把cuda后端参数设置为on。
 
+git clone https://github.com/ggerganov/llama.cpp
+
+cpu版本：
+cmake -B build
+cmake --build build --config release
+
+cuda版本：
+cmake -B build -DLLAMA_CUDA=ON
+cmake --build build --config release
+
+如果要调试，记得，cuda版本，-j(multiple jobs 加速编译)：
+cmake -B build -DLLAMA_CUDA=ON -DCMAKE_BUILD_TYPE=Debug
+cmake --build build -j 8
+
 编译完成后运行测试,一个简单的生成测试为例，<https://github.com/ggml-org/llama.cpp/blob/master/examples/simple/README.md>
+CUDA_VISIBLE_DEVICES=0 ./build/bin/llama-simple -m /mnt/models/Llama-2-7b-hf/Llama-2-7B-hf-F16.gguf "Hello my name is"
 
-### 结构分析
+成功后我们后面以最为通用的main方法进行解析：
+CUDA_VISIBLE_DEVICES=0 ./build/bin/llama-cli -m /mnt/models/Llama-2-7b-hf/Llama-2-7B-hf-F16.gguf --prompt "Once upon a time" -n 128
 
-代码结构：
+```
+
+### 代码分析
+
+特点：先分配、后计算
+
+这是llama.cpp与其他python推理框架思想上最大的区别之一。即在进行实际计算时，需要对过程中所有可能用到的数据、信息提前分配内存。从而在实际推理计算过程中，做到“0”内存分配（虽然使用mmap之后，在运行最初阶段。计算时仍然会触发read来加载缺页）。这样设计的原因是作者认为在运行过程中，malloc等内存分配函数的计算开销太大，而作为一款以边缘计算为主的推理框架，应该尽可能减少这种开销。
+
+llama.cpp简要流程：
+1. 通过c++构造qwen等model（调用算子来定义计算图），并将gguf中的数据加载到模型中
+2. model本质上是一个计算图，采用逐个算子调用和异步执行，不存在算子融合等操作
+3. 支持kv-cache/flash attention，默认不启用
+4. 支持各种后端
+
+具体解析用ppt解析
+[llamacpp-powerinfer](./llamacpp-powerinfer.pptx)
 
 ## powerinfer
 
 ### 使用
 
-编译和llama.cpp差不多,目前编译会有很多warning,不知道有没有问题。
+编译和llama.cpp差不多,目前编译会有很多warning,但是可以正常编译。
+```raw
+cuda:
+cmake -S . -B build -DLLAMA_CUBLAS=ON
+cmake --build build --config Release
 
-模型权重格式有区别，*.powerinfer.gguf，包括模型权重与预测器权重
+cpu:
+cmake -S . -B build
+cmake --build build --config Release
+
+cuda调试：
+cmake -S . -B build -DLLAMA_CUBLAS=ON -DCMAKE_BUILD_TYPE=Debug
+cmake --build build -j 8
+
+```
+
+模型权重格式有区别，*.powerinfer.gguf，包括**模型权重与预测器权重**
 
 ```raw
 .
@@ -242,14 +291,18 @@ python convert.py --outfile ./ReluLLaMA-70B-PowerInfer-GGUF/llama-70b-relu.power
 推理参考
 
 ```raw
-./build/bin/main -m /PATH/TO/MODEL -n $output_token_count -t $thread_num -p $prompt --vram-budget $vram_gb
-# e.g.:  ./build/bin/main -m /mnt/models/prosparse-llama-2-7b-gguf/prosparse-llama-2-7b.gguf -n 1024 -t 2 -p "write a story of sysu" --vram-budget 4--vram-budget 8
+# ./build/bin/main -m /PATH/TO/MODEL -n $output_token_count -t $thread_num -p $prompt --vram-budget $vram_gb
+# CUDA_VISIBLE_DEVICES=0 ./build/bin/main -m /mnt/models/prosparse-llama-2-7b-gguf/prosparse-llama-2-7b.gguf -n 64 -t 2 -p "write a story of sysu" --vram-budget 4
+
+batch推理参考 <https://github.com/SJTU-IPADS/PowerInfer/blob/main/examples/batched/README.md>
 ```
 
-批量推理参考 <https://github.com/SJTU-IPADS/PowerInfer/blob/main/examples/batched/README.md>
+- powerinfer同时也支持量化模型，使用方式相同；
+- powerinfer暂时只支持ReLU/ReGLU/Squared，这三个激活函数，所以mistral, original llama,Qwen这些模型不支持,需要添加算子
 
-powerinfer同时也支持量化模型，使用方式相同；
-powerinfer暂时只支持ReLU/ReGLU/Squared，这三个激活函数，所以mistral, original llama,Qwen这些模型不支持,需要添加算子
+### 代码解析
+
+这里只解析和llama.cpp不一样的地方
 
 ## 参考
 
@@ -260,3 +313,4 @@ powerinfer暂时只支持ReLU/ReGLU/Squared，这三个激活函数，所以mist
 - <https://zhuanlan.zhihu.com/p/25774381094>
 - <https://huggingface.co/blog/zh/introduction-to-ggml>
 - <https://zhuanlan.zhihu.com/p/19968327329>
+- llama.cpp（持续更新） - 单单野草的文章 - 知乎 https://zhuanlan.zhihu.com/p/697880115

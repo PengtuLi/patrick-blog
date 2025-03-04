@@ -1,13 +1,12 @@
-(base) root@x299aii:~/workspace/PowerInfer/build/examples# ../bin/main -m /mnt/models/prosparse-llama-2-7b-gguf/prosparse-llama-2-7b.gguf -n 1024 -t 2 -p "write a story of sexy" --vram-budget 4
+(base) root@x299aii:~/workspace/PowerInfer# CUDA_VISIBLE_DEVICES=0 ./build/bin/main -m /mnt/models/prosparse-llama-2-7b-gguf/prosparse-llama-2-7b.gguf -n 64 -t 2 -p "write a story of sysu" --vram-budget 4
 Log start
 main: build = 1586 (843195e)
 main: built with cc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0 for x86_64-linux-gnu
-main: seed  = 1740731741
+main: seed  = 1741093233
 ggml_init_cublas: GGML_CUDA_FORCE_MMQ:   no
 ggml_init_cublas: CUDA_USE_TENSOR_CORES: yes
-ggml_init_cublas: found 2 CUDA devices:
+ggml_init_cublas: found 1 CUDA devices:
   Device 0: NVIDIA GeForce RTX 3090, compute capability 8.6
-  Device 1: NVIDIA GeForce RTX 3090, compute capability 8.6
 llama_model_loader: loaded meta data with 17 key-value pairs and 355 tensors from /mnt/models/prosparse-llama-2-7b-gguf/prosparse-llama-2-7b.gguf (version GGUF V3 (latest))
 llama_model_loader: - tensor    0:                token_embd.weight f16      [  4096, 32000,     1,     1 ]
 llama_model_loader: - tensor    1:           blk.0.attn_norm.weight f32      [  4096,     1,     1,     1 ]
@@ -364,23 +363,23 @@ llama_model_loader: - tensor  351:                blk.30.fc1.weight f16      [  
 llama_model_loader: - tensor  352:                blk.30.fc2.weight f16      [  1024, 11008,     1,     1 ]
 llama_model_loader: - tensor  353:                blk.31.fc1.weight f16      [  4096,  1024,     1,     1 ]
 llama_model_loader: - tensor  354:                blk.31.fc2.weight f16      [  1024, 11008,     1,     1 ]
-llama_model_loader: - kv   0:                       general.architecture str
-llama_model_loader: - kv   1:                               general.name str
-llama_model_loader: - kv   2:                       llama.context_length u32
-llama_model_loader: - kv   3:                     llama.embedding_length u32
-llama_model_loader: - kv   4:                          llama.block_count u32
-llama_model_loader: - kv   5:                  llama.feed_forward_length u32
-llama_model_loader: - kv   6:                 llama.rope.dimension_count u32
-llama_model_loader: - kv   7:                 llama.attention.head_count u32
-llama_model_loader: - kv   8:              llama.attention.head_count_kv u32
-llama_model_loader: - kv   9:     llama.attention.layer_norm_rms_epsilon f32
-llama_model_loader: - kv  10:                          general.file_type u32
-llama_model_loader: - kv  11:                       tokenizer.ggml.model str
-llama_model_loader: - kv  12:                      tokenizer.ggml.tokens arr
-llama_model_loader: - kv  13:                      tokenizer.ggml.scores arr
-llama_model_loader: - kv  14:                  tokenizer.ggml.token_type arr
-llama_model_loader: - kv  15:                tokenizer.ggml.bos_token_id u32
-llama_model_loader: - kv  16:                tokenizer.ggml.eos_token_id u32
+llama_model_loader: - kv   0:                       general.architecture str     
+llama_model_loader: - kv   1:                               general.name str     
+llama_model_loader: - kv   2:                       llama.context_length u32     
+llama_model_loader: - kv   3:                     llama.embedding_length u32     
+llama_model_loader: - kv   4:                          llama.block_count u32     
+llama_model_loader: - kv   5:                  llama.feed_forward_length u32     
+llama_model_loader: - kv   6:                 llama.rope.dimension_count u32     
+llama_model_loader: - kv   7:                 llama.attention.head_count u32     
+llama_model_loader: - kv   8:              llama.attention.head_count_kv u32     
+llama_model_loader: - kv   9:     llama.attention.layer_norm_rms_epsilon f32     
+llama_model_loader: - kv  10:                          general.file_type u32     
+llama_model_loader: - kv  11:                       tokenizer.ggml.model str     
+llama_model_loader: - kv  12:                      tokenizer.ggml.tokens arr     
+llama_model_loader: - kv  13:                      tokenizer.ggml.scores arr     
+llama_model_loader: - kv  14:                  tokenizer.ggml.token_type arr     
+llama_model_loader: - kv  15:                tokenizer.ggml.bos_token_id u32     
+llama_model_loader: - kv  16:                tokenizer.ggml.eos_token_id u32     
 llama_model_loader: - type  f32:   65 tensors
 llama_model_loader: - type  f16:  290 tensors
 llama_model_load: PowerInfer model loaded. Sparse inference will be used.
@@ -410,7 +409,7 @@ llm_load_print_meta: rope_finetuned   = unknown
 llm_load_print_meta: model type       = 7B
 llm_load_print_meta: model ftype      = mostly F16
 llm_load_print_meta: model params     = 7.23 B
-llm_load_print_meta: model size       = 13.47 GiB (16.00 BPW)
+llm_load_print_meta: model size       = 13.47 GiB (16.00 BPW) 
 llm_load_print_meta: general.name   = LLaMA v2
 llm_load_print_meta: BOS token = 1 '<s>'
 llm_load_print_meta: EOS token = 2 '</s>'
@@ -419,13 +418,12 @@ llm_load_print_meta: LF token  = 13 '<0x0A>'
 llm_load_print_meta: sparse_pred_threshold = 0.00
 llm_load_sparse_model_tensors: ggml ctx size =    0.13 MB
 llm_load_sparse_model_tensors: using CUDA for GPU acceleration
-ggml_cuda_set_main_device: using device 0 (NVIDIA GeForce RTX 3090) as main device
 llm_load_sparse_model_tensors: offloaded layers from VRAM budget(4294967296 bytes): 31/32
 llm_load_sparse_model_tensors: mem required  = 13797.15 MB
 llm_load_sparse_model_tensors: VRAM used: 4064.50 MB
 ...................................................................................................
 offload_ffn_split: applying augmentation to model - please wait ...
-................................ done (7.42 ms)
+................................ done (11.62 ms)
 llm_load_gpu_split: offloaded 0.00 MiB of FFN weights to GPU
 llama_new_context_with_model: n_ctx      = 512
 llama_new_context_with_model: freq_base  = 10000.0
@@ -442,48 +440,22 @@ llama_new_context_with_model: compute buffer total size = 85.07 MB
 llama_new_context_with_model: VRAM scratch buffer: 83.50 MB
 llama_new_context_with_model: total VRAM used: 4148.00 MB (model: 4064.50 MB, context: 83.50 MB)
 
-system_info: n_threads = 2 / 20 | AVX = 1 | AVX2 = 1 | AVX512 = 1 | AVX512_VBMI = 0 | AVX512_VNNI = 0 | FMA = 1 | NEON = 0 | ARM_FMA = 0 | F16C = 1 | FP16_VA = 0 | WASM_SIMD = 0 | BLAS = 1 | SSE3 = 1 | SSSE3 = 1 | VSX = 0 |
-sampling:
+system_info: n_threads = 2 / 20 | AVX = 1 | AVX2 = 1 | AVX512 = 1 | AVX512_VBMI = 0 | AVX512_VNNI = 0 | FMA = 1 | NEON = 0 | ARM_FMA = 0 | F16C = 1 | FP16_VA = 0 | WASM_SIMD = 0 | BLAS = 1 | SSE3 = 1 | SSSE3 = 1 | VSX = 0 | 
+sampling: 
         repeat_last_n = 64, repeat_penalty = 1.100, frequency_penalty = 0.000, presence_penalty = 0.000
         top_k = 40, tfs_z = 1.000, top_p = 0.950, min_p = 0.050, typical_p = 1.000, temp = 0.800
         mirostat = 0, mirostat_lr = 0.100, mirostat_ent = 5.000
-generate: n_ctx = 512, n_batch = 512, n_predict = 1024, n_keep = 0
+generate: n_ctx = 512, n_batch = 512, n_predict = 64, n_keep = 0
 
 
-write a story of sexy shit!
+write a story of sysu graduation ceremony
 
-The girl was about 19 years old, with blonde hair and a tight ass that made any man drool. She stood there in her short black dress, legs apart and hands on hips. Her boobs were small but perky and she had a cute face. He watched as the men in front of her danced, drinking beer and chatting with each other. The music was loud enough that you could feel it thumping through your bones. She looked at him from across the room, and he walked over to her.
+Posted by katie
 
-“Hey there,” she said. “You look like a good time tonight.”
-
-He smiled back. He had been thinking about getting some alone time with her for weeks now, but never dared to ask her out. Tonight was different though, tonight he wasn’t afraid anymore.
-
-“I really am,” he said, as they walked towards each other. “You’re a good looking girl.”
-
-She smiled back and put her hand on his arm. She led him upstairs to the dance floor and onto the balcony where there was a bar set up. He looked at her again.
-
-“Can I buy you a drink?” he asked.
-
-“I’m twenty one,” she replied. “You can buy me all the booze in town.”
-
-He laughed and bought her a shot of tequila, but she didn’t down it like he thought she would. She drank it slowly, savoring every taste of the tequila that burned down her throat. He poured himself another shot of tequila as they talked about life and love and all that other stuff.
-
-He watched as her dress hugged her curves in just the right way, he was beginning to feel his erection getting bigger than it had ever been before.
-
-“I like you,” she said suddenly. “You’re cute.”
-
-He smiled back at her and leaned closer. Suddenly he wrapped his arms around her waist and pulled her in close. She looked up into his eyes, and he could see the fire in them burn down to a sparkle that made him feel alive.
-
-She reached out and grabbed the top of his head with her fingers and held onto it tight. He leaned back and kissed her lightly. Suddenly her lips started moving around on his mouth like he had never seen before. He wanted to tell her something, but instead he just leaned in closer and felt her soft body against mine as she moaned softly into my mouth.
-
-He could feel the wetness of her kisses against his mouth as they kissed harder and harder. She wrapped her arms around him tightly and started rubbing his hard erection through the top of his dress with her hands. He had never felt so alive before. Everything that she did was exactly what he wanted to be doing in bed, but for some reason he kept resisting it.
-
-The harder that she rubbed her soft breasts against him the more intense the sensations became. Her lips were still moving around on his mouth softly, and he could feel her tongue licking across my teeth as they kissed harder. He felt the wetness of her body against mine as she started rubbing her wet panties against me hard.
-
-He reached for her waistband tightly and pulled it down slowly exposing her smooth skin that was so soft to the touch. Suddenly he could feel the wetness against his erection as she started rubbing her wet clit against mine tightly. He could feel her lips still moving around softly on my mouth as she rubbed hard against me for a few seconds before slowly starting rubbing harder with one hand and rubbing faster with another hand as her moans got louder and more intense. Suddenly he heard the sound of his erection against mine as she started rubbing even harder than before as her moaning grew even stronger, and he could feel it starting to harden through my shirt as she rubbed even faster with both hands tightly rubbing against me for a few seconds before suddenly stopping. Suddenly he felt the wetness from her wet panties against mine as she started rubbing harder and faster against him than ever before, and he could feel it starting to harden through his shirt as she rubbed even harder with both hands tightly rubbing against him for a few seconds before suddenly stopping. Suddenly he felt the wetness against my erection as she started rubbing even harder than before, and he could feel it hardening through his shirt as she rubbed even faster with her hand tightly rubbing against me for a few seconds before suddenly stopping. Suddenly he heard the sound of
-llama_print_timings:        load time =    3183.24 ms
-llama_print_timings:      sample time =     480.77 ms /  1024 runs   (    0.47 ms per token,  2129.92 tokens per second)
-llama_print_timings: prompt eval time =    1387.95 ms /     7 tokens (  198.28 ms per token,     5.04 tokens per second)
-llama_print_timings:        eval time =  277644.32 ms /  1023 runs   (  271.40 ms per token,     3.68 tokens per second)
-llama_print_timings:       total time =  279795.36 ms
+We were told we would be in the audience, and that some people are going to wear caps. When we first came out, there was like 500 people waiting in front of us for our seats. Everyone has these really nice uniforms.
+llama_print_timings:        load time =    3331.24 ms
+llama_print_timings:      sample time =     259.30 ms /    64 runs   (    4.05 ms per token,   246.82 tokens per second)
+llama_print_timings: prompt eval time =    8788.54 ms /     7 tokens ( 1255.51 ms per token,     0.80 tokens per second)
+llama_print_timings:        eval time =   71374.04 ms /    63 runs   ( 1132.92 ms per token,     0.88 tokens per second)
+llama_print_timings:       total time =   80471.35 ms
 Log end
