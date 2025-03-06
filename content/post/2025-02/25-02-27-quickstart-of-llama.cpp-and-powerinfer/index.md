@@ -28,7 +28,7 @@ ggml是一个用 C 和 C++ 编写、专注于 Transformer 架构模型推理的�
   ![ggml_context](ggml_context.png)
 
 - ggml_cgraph: 计算图的表示，可以理解为将要传给后端的“计算执行顺序”。
-- ggml_tensor：ggml版的tensor表示，与pytorch类似，数据存储在data指针变量里
+- ggml_tensor：ggml版的tensor表示，与pytorch类似，数据存储在data指针变量里;op保存在op指针里
 - ggml_backend_t // the backend to perform the computation (CPU, CUDA, METAL)
 - ggml_backend_buffer_t buffer; // the backend buffer to storage the tensors data
 
@@ -183,6 +183,8 @@ class GPTNeoXModel(Model):
 3. 然后调用llama.cpp定义的对应模型的接口，来完成模型转换
 model_instance.set_gguf_parameters() # 将config.json中的参数配置写入到gguf文件的metadata中
 model_instance.set_vocab()           # 进行词表转换，llama.cpp将词表数据也保存到了gguf文件中
+
+这里底层的逻辑是在`GGUF-py`这个包里实现的`import gguf`
 ```
 
 如果模型没有定义不支持（如opt就不支持）
@@ -233,6 +235,7 @@ CUDA_VISIBLE_DEVICES=0 ./build/bin/llama-simple -m /mnt/models/Llama-2-7b-hf/Lla
 成功后我们后面以最为通用的main方法进行解析：
 CUDA_VISIBLE_DEVICES=0 ./build/bin/llama-cli -m /mnt/models/Llama-2-7b-hf/Llama-2-7B-hf-F16.gguf --prompt "Once upon a time" -n 128
 
+注意 -ngl 这个参数，它代表：n_gpu_layers，这个参数默认是 0，所以如果不设置为一个比较大的数字，整个模型就会到 CPU 上面跑，即便你用了 cublas 等各种编译参数也是在 CPU 上。
 ```
 
 ### 代码分析
@@ -244,7 +247,7 @@ CUDA_VISIBLE_DEVICES=0 ./build/bin/llama-cli -m /mnt/models/Llama-2-7b-hf/Llama-
 llama.cpp简要流程：
 1. 通过c++构造qwen等model（调用算子来定义计算图），并将gguf中的数据加载到模型中
 2. model本质上是一个计算图，采用逐个算子调用和异步执行，不存在算子融合等操作
-3. 支持kv-cache/flash attention，默认不启用
+3. 支持kv-cache/flash attention(默认不启用)
 4. 支持各种后端
 
 具体解析用ppt解析
@@ -302,15 +305,41 @@ batch推理参考 <https://github.com/SJTU-IPADS/PowerInfer/blob/main/examples/b
 
 ### 代码解析
 
+```raw
+官方提供的已经整合weight和predictor gguf的信息
+
+llama_model_loader: loaded meta data with 17 key-value pairs and 355 tensors from /mnt/models/prosparse-llama-2-7b-gguf/prosparse-llama-2-7b.gguf (version GGUF V3 (latest))
+
+每一层的模型参数：
+llama_model_loader: - tensor    1:           blk.0.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor    2:          blk.0.ffn_down_t.weight f16      [  4096, 11008,     1,     1 ]
+llama_model_loader: - tensor    3:            blk.0.ffn_gate.weight f16      [  4096, 11008,     1,     1 ]
+llama_model_loader: - tensor    4:              blk.0.ffn_up.weight f16      [  4096, 11008,     1,     1 ]
+llama_model_loader: - tensor    5:            blk.0.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor    6:              blk.0.attn_k.weight f16      [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor    7:         blk.0.attn_output.weight f16      [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor    8:              blk.0.attn_q.weight f16      [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor    9:              blk.0.attn_v.weight f16      [  4096,  4096,     1,     1 ]
+
+每一层预测器的参数
+llama_model_loader: - tensor  291:                 blk.0.fc1.weight f16      [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  292:                 blk.0.fc2.weight f16      [  1024, 11008,     1,     1 ]
+```
+
 这里只解析和llama.cpp不一样的地方
 
 ## 参考
 
 - <https://www.bilibili.com/video/BV1Ez4y1w7fc> 不错的视频解析llama.cpp
 - <https://www.bilibili.com/video/BV1N4wreWE8z> 较为详细解析llama.cpp
-- <https://zhuanlan.zhihu.com/p/665027154>
+- llama.cpp源码解析--CUDA流程版本 - CodeLearner的文章 - 知乎
+https://zhuanlan.zhihu.com/p/665027154
 - <https://zhuanlan.zhihu.com/p/691347732>
 - <https://zhuanlan.zhihu.com/p/25774381094>
 - <https://huggingface.co/blog/zh/introduction-to-ggml>
 - <https://zhuanlan.zhihu.com/p/19968327329>
 - llama.cpp（持续更新） - 单单野草的文章 - 知乎 https://zhuanlan.zhihu.com/p/697880115
+- 笔记：Llama.cpp 代码浅析（一）：并行机制与KVCache - 刀刀宁的文章 - 知乎
+https://zhuanlan.zhihu.com/p/670515231
+- 笔记：Llama.cpp 代码浅析（二）：数据结构与采样方法 - 刀刀宁的文章 - 知乎
+https://zhuanlan.zhihu.com/p/671761052
