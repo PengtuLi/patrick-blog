@@ -3,7 +3,7 @@ title: "Quickstart of Llama.cpp and Powerinfer"
 author : "tutu"
 description:
 date: '2025-02-27'
-lastmod: '2025-02-27'
+lastmod: '2025-03-09'
 image:
 math: true
 hidden: false
@@ -327,6 +327,43 @@ llama_model_loader: - tensor  292:                 blk.0.fc2.weight f16      [  
 ```
 
 这里只解析和llama.cpp不一样的地方
+
+## integrate sd into powerinfer
+
+### sd in llama.cpp
+
+```bash
+# basic greedy speculative decoding
+
+# llama.cpp/examples/speculative-simple
+
+CUDA_VISIBLE_DEVICES=0 build/bin/llama-speculative-simple \
+    -m  /mnt/models/Llama-2-7b-hf/Llama-2-7B-hf-F16.gguf \
+    -md /mnt/models/llama-68m/llama-68M-F16.gguf \
+    -p "write a intro of sysu university." -c 0 -ngl 99 --color \
+    --sampling-seq k --top-k 1 -fa --temp 0.0 \
+    -ngld 99 --draft-max 16 --draft-min 5 --draft-p-min 0.9
+
+上面的代码会遇到一些问题：
+common_speculative_are_compatible: tgt: bos = 1 (1), eos = 2 (0)
+common_speculative_are_compatible: dft: bos = 0 (1), eos = 2 (0)
+所以我需要把这两个分词器特殊Id统一，我在想这个问题对训练预测器有没有影响（感觉没有）
+这里经过多次尝试只需要改config.json的token id就可以正常跑起来，但是不确定有什么影响
+
+```
+
+可以通过以下几个pr了解llama.cpp推测解码设计：
+
+[speculative : PoC for speeding-up inference via speculative sampling by ggerganov · Pull Request #2926 · ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp/pull/2926/commits/a15ca746c7fdc2425aaee48a62f5006a64ebb5bc)
+
+[speculative : add tree-based sampling example by ggerganov · Pull Request #3624 · ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp/pull/3624)
+
+[Implement stochastic speculative sampling by mscheong01 · Pull Request #5625 · ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp/pull/5625)
+
+推测解码解析：
+
+
+### integrate into powerinfer
 
 ## 参考
 

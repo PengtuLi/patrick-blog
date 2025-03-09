@@ -2,6 +2,12 @@
 [goldmark.renderer]
 unsafe = true
 
+# Hugo includes an embedded link render hook to resolve Markdown link destinations. 
+# Disabled by default, you can enable it in your site configuration:
+# [goldmark.renderHooks]
+#    [markup.goldmark.renderHooks.link]
+#        enableDefault = true
+
 [goldmark.extensions.passthrough]
 enable = true
 

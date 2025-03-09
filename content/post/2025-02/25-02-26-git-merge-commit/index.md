@@ -1,5 +1,5 @@
 ---
-title: "Git Merge Commit"
+title: "Git Merge Commits"
 author : "tutu"
 description:
 date: '2025-02-26'
@@ -22,7 +22,7 @@ categories : ['tool']
 
 git rebase -i HEAD~5
 
-如果想要从某个commit开始-i后跟开始的commit hash
+如果想要从某个commit开始-i后跟开始的commit hash(不包括指定的commit,开区间)
 
 - 选择要合并的 commit：
 
