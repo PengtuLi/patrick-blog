@@ -3,7 +3,7 @@ title: "Access Campus Network From Outside"
 author : "tutu"
 description:
 date: '2025-01-09'
-lastmod: '2025-01-09'
+lastmod: '2025-03-10'
 image:
 math: true
 hidden: false
@@ -242,17 +242,12 @@ sudo systemctl enable frps
 
 [^1]:<https://gofrp.org/zh-cn/docs/features/common/load-balancer/>
 
-### 注意
+### 注意:安全性问题
 
-可能安全上有一些问题，公司学校服务器还是谨慎使用，我配置frpc的服务器被管理员告知被用作爆破机扫描
-内网的其他电脑！
-
-目前还没查清楚原因
+可能安全上有一些问题，公司学校服务器还是谨慎使用，需要提升安全性。不要使用公司提供的frp服务，可能通过域名特点识别是frp从而进行爆破。
 
 {{<notice warning>}}
 <https://github.com/fatedier/frp/issues/2860>
-
-前两天在学校服务器装了frp，然后被报我们服务器在攻击其他平台，网络中心老师直接把网段封了。现在申请的服务器被回收了，难受啊，不知道是不是frp的问题，当时腾讯云报病毒我还没在意，安全意识薄弱啊
 
 releases下载的frp是安全的，所以可能有以下原因
 
@@ -264,11 +259,25 @@ releases下载的frp是安全的，所以可能有以下原因
 解决：
 
 1. 公网机限制
-如果使用了FRP，可以在公网机上使用fail2ban、或者防火墙之类的，禁止国外的IP以及不停重复请求的IP。花生壳也有这样的服务，不过是付费的，花点钱也可以解决。
+如果使用了FRP，可以在公网机上使用fail2ban、或者防火墙之类的，禁止国外的IP以及不停重复请求的IP。
 
 2. pubkey登录
-如果不想花钱的话，就只能使用pubkey登录了，pubkey确实要更安全一些。我的这台机器之前有好几个人用，这次就有两三个账号都被别人爆破了。这也充分说明了，服务器的密码登录是不够安全的，主要是你也没法保证别人使用足够安全的密码。
+如果不想花钱的话，就只能使用pubkey登录了，pubkey确实要更安全一些。
 
 3. 再套上一层VPN
 
 {{</notice>}}
+
+#### 提升安全性 Frp+OpenVPN
+
+![open vpn](openvpn.png)
+
+区别：
+
+- 公网云服务器：运行 FRP 服务端
+- 实验室内网服务器：运行 FRP 客户端、**安装 OpenVPN**
+- 外网计算机设备：**安装 OpenVPN** 进行连接
+
+配置frp过程类似
+
+安装open vpn: https://github.com/angristan/openvpn-install

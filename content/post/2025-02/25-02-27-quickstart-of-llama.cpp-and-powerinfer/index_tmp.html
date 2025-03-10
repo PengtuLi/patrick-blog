@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>index.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h2 id="ggml">ggml</h2>
+<p>ggml是一个用 C 和 C++ 编写、专注于 Transformer 架构模型推理的机器学习库，ggml相当于c++版的pytroch。llama.cpp底层推理采用该库。
+可以理解成它主要干了这个事<code>result = torch.matmul(matrix1, matrix2.T)</code></p>
+<p>关键概念：</p>
+<ul>
+<li>
+<p>ggml_context: 一个装载各类对象 (如张量、计算图、其他数据) 的“容器”。</p>
+<p>对于ggml框架来说，无论要做什么（建立modle模型、建立计算图、还是创建承载计算结果的result）都需要先创建一个context作为容器，并将创建的结构体保存在context里（不包括实际数据本身，数据通过结构体里的指针索引）。实际数据的存储位置是由sched调度器与backend buffer后端缓冲所管理存放的</p>
+<p>所以在后续的计算中，我们只需要拿到ctx，就能拿到所有的信息列表，然后经过查找，就可以得到实际数据的存储指针、数据类型等信息。</p>
+<p><img src="file:///Users/tutu/Desktop/patrick-blog/content/post/2025-02/25-02-27-quickstart-of-llama.cpp-and-powerinfer/ggml_context.png" alt="ggml_context"></p>
+</li>
+<li>
+<p>ggml_cgraph: 计算图的表示，可以理解为将要传给后端的“计算执行顺序”。</p>
+</li>
+<li>
+<p>ggml_tensor：ggml版的tensor表示，与pytorch类似，数据存储在data指针变量里;op保存在op指针里</p>
+</li>
+<li>
+<p>ggml_backend_t // the backend to perform the computation (CPU, CUDA, METAL)</p>
+</li>
+<li>
+<p>ggml_backend_buffer_t buffer; // the backend buffer to storage the tensors data</p>
+<p>在ggml框架中，一切数据（context、dataset、tensor...）都应该被存放在buffer中。之所以要用buffer进行集成，是为了便于实现多种后端（CPU、GPU）内存的统一管理。buffer是实现不同类型数据在多种类型后端上进行统一的接口对象。</p>
+<p>ggml_backend_buffer_t表示通过应后端backend通过分配的内存空间。需要注意的是，一个缓存可以存储多个张量数据。</p>
+</li>
+</ul>
+<p>要在CPU上完成上述矩阵乘法，步骤如下：</p>
+<ul>
+<li>分配一个 ggml_context 对象来存储张量数据</li>
+<li>分配张量并赋值</li>
+<li>为矩阵乘法运算创建一个 ggml_cgraph</li>
+<li>执行计算</li>
+<li>获取计算结果</li>
+<li>释放内存并退出</li>
+</ul>
+<details>
+</details><summary>code</summary>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"ggml.h"</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"ggml-cpu.h"</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span> </span>{
+    <span class="hljs-comment">// initialize data of matrices to perform matrix multiplication</span>
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> rows_A = <span class="hljs-number">4</span>, cols_A = <span class="hljs-number">2</span>;
+    <span class="hljs-keyword">float</span> matrix_A[rows_A * cols_A] = {
+        <span class="hljs-number">2</span>, <span class="hljs-number">8</span>,
+        <span class="hljs-number">5</span>, <span class="hljs-number">1</span>,
+        <span class="hljs-number">4</span>, <span class="hljs-number">2</span>,
+        <span class="hljs-number">8</span>, <span class="hljs-number">6</span>
+    };
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> rows_B = <span class="hljs-number">3</span>, cols_B = <span class="hljs-number">2</span>;
+    <span class="hljs-keyword">float</span> matrix_B[rows_B * cols_B] = {
+        <span class="hljs-number">10</span>, <span class="hljs-number">5</span>,
+        <span class="hljs-number">9</span>, <span class="hljs-number">9</span>,
+        <span class="hljs-number">5</span>, <span class="hljs-number">4</span>
+    };
+
+    <span class="hljs-comment">// 1. Allocate `ggml_context` to store tensor data</span>
+    <span class="hljs-comment">// Calculate the size needed to allocate</span>
+    <span class="hljs-keyword">size_t</span> ctx_size = <span class="hljs-number">0</span>;
+    ctx_size += rows_A * cols_A * ggml_type_size(GGML_TYPE_F32); <span class="hljs-comment">// tensor a</span>
+    ctx_size += rows_B * cols_B * ggml_type_size(GGML_TYPE_F32); <span class="hljs-comment">// tensor b</span>
+    ctx_size += rows_A * rows_B * ggml_type_size(GGML_TYPE_F32); <span class="hljs-comment">// result</span>
+    ctx_size += <span class="hljs-number">3</span> * ggml_tensor_overhead(); <span class="hljs-comment">// metadata for 3 tensors</span>
+    ctx_size += ggml_graph_overhead(); <span class="hljs-comment">// compute graph</span>
+    ctx_size += <span class="hljs-number">1024</span>; <span class="hljs-comment">// some overhead (exact calculation omitted for simplicity)</span>
+
+    <span class="hljs-comment">// Allocate `ggml_context` to store tensor data</span>
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">ggml_init_params</span> <span class="hljs-title">params</span> = {</span>
+        <span class="hljs-comment">/*.mem_size =*/</span> ctx_size,
+        <span class="hljs-comment">/*.mem_buffer =*/</span> <span class="hljs-literal">NULL</span>,
+        <span class="hljs-comment">/*.no_alloc =*/</span> <span class="hljs-literal">false</span>,
+    };
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">ggml_context</span> * <span class="hljs-title">ctx</span> = <span class="hljs-title">ggml_init</span>(<span class="hljs-title">params</span>);</span>
+
+    <span class="hljs-comment">// 2. Create tensors and set data</span>
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">ggml_tensor</span> * <span class="hljs-title">tensor_a</span> = <span class="hljs-title">ggml_new_tensor_2d</span>(<span class="hljs-title">ctx</span>, <span class="hljs-title">GGML_TYPE_F32</span>, <span class="hljs-title">cols_A</span>, <span class="hljs-title">rows_A</span>);</span>
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">ggml_tensor</span> * <span class="hljs-title">tensor_b</span> = <span class="hljs-title">ggml_new_tensor_2d</span>(<span class="hljs-title">ctx</span>, <span class="hljs-title">GGML_TYPE_F32</span>, <span class="hljs-title">cols_B</span>, <span class="hljs-title">rows_B</span>);</span>
+    <span class="hljs-built_in">memcpy</span>(tensor_a-&gt;data, matrix_A, ggml_nbytes(tensor_a));
+    <span class="hljs-built_in">memcpy</span>(tensor_b-&gt;data, matrix_B, ggml_nbytes(tensor_b));
+
+
+    <span class="hljs-comment">// 3. Create a `ggml_cgraph` for mul_mat operation</span>
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">ggml_cgraph</span> * <span class="hljs-title">gf</span> = <span class="hljs-title">ggml_new_graph</span>(<span class="hljs-title">ctx</span>);</span>
+
+    <span class="hljs-comment">// result = a*b^T</span>
+    <span class="hljs-comment">// Pay attention: ggml_mul_mat(A, B) ==&gt; B will be transposed internally</span>
+    <span class="hljs-comment">// the result is transposed</span>
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">ggml_tensor</span> * <span class="hljs-title">result</span> = <span class="hljs-title">ggml_mul_mat</span>(<span class="hljs-title">ctx</span>, <span class="hljs-title">tensor_a</span>, <span class="hljs-title">tensor_b</span>);</span>
+
+    <span class="hljs-comment">// Mark the "result" tensor to be computed</span>
+    ggml_build_forward_expand(gf, result);
+
+    <span class="hljs-comment">// 4. Run the computation</span>
+    <span class="hljs-keyword">int</span> n_threads = <span class="hljs-number">1</span>; <span class="hljs-comment">// Optional: number of threads to perform some operations with multi-threading</span>
+    ggml_graph_compute_with_ctx(ctx, gf, n_threads);
+
+    <span class="hljs-comment">// 5. Retrieve results (output tensors)</span>
+    <span class="hljs-keyword">float</span> * result_data = (<span class="hljs-keyword">float</span> *) result-&gt;data;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"mul mat (%d x %d) (transposed result):\n["</span>, (<span class="hljs-keyword">int</span>) result-&gt;ne[<span class="hljs-number">0</span>], (<span class="hljs-keyword">int</span>) result-&gt;ne[<span class="hljs-number">1</span>]);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; result-&gt;ne[<span class="hljs-number">1</span>]<span class="hljs-comment">/* rows */</span>; j++) {
+        <span class="hljs-keyword">if</span> (j &gt; <span class="hljs-number">0</span>) {
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n"</span>);
+        }
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; result-&gt;ne[<span class="hljs-number">0</span>]<span class="hljs-comment">/* cols */</span>; i++) {
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">" %.2f"</span>, result_data[j * result-&gt;ne[<span class="hljs-number">0</span>] + i]);
+        }
+    }
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">" ]\n"</span>);
+
+    <span class="hljs-comment">// 6. Free memory and exit</span>
+    ggml_free(ctx);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+</div></code></pre>
+
+<p>对于gpu上的执行该矩阵乘法：
+<a href="https://github.com/ggerganov/ggml/blob/6c71d5a071d842118fb04c03c4b15116dff09621/examples/simple/simple-backend.cpp">https://github.com/ggerganov/ggml/blob/6c71d5a071d842118fb04c03c4b15116dff09621/examples/simple/simple-backend.cpp</a></p>
+<p>一个好的示例mnist：
+https://github.com/ggml-org/ggml/blob/master/examples/mnist/README.md</p>
+<h2 id="gguf%E6%A0%BC%E5%BC%8F">gguf格式</h2>
+<p>gguf特性：</p>
+<ul>
+<li>方便添加新信息到模型中</li>
+<li>mmap兼容，能够直接将文件映射到内存中</li>
+<li>量化兼容</li>
+<li>key-value structure netadata</li>
+</ul>
+<p>图示：
+<img src="file:///Users/tutu/Desktop/patrick-blog/content/post/2025-02/25-02-27-quickstart-of-llama.cpp-and-powerinfer/gguf.png" alt="gguf"></p>
+<p>增加、修改模型的metadata:</p>
+<ul>
+<li><a href="https://github.com/ggml-org/llama.cpp/blob/master/gguf-py/gguf/scripts/gguf_set_metadata.py">https://github.com/ggml-org/llama.cpp/blob/master/gguf-py/gguf/scripts/gguf_set_metadata.py</a></li>
+<li><a href="https://github.com/ggml-org/llama.cpp/blob/master/gguf-py/gguf/scripts/gguf_new_metadata.py">https://github.com/ggml-org/llama.cpp/blob/master/gguf-py/gguf/scripts/gguf_new_metadata.py</a></li>
+</ul>
+<p>doc:</p>
+<ul>
+<li><a href="https://github.com/ggml-org/ggml/blob/master/docs/gguf.md">https://github.com/ggml-org/ggml/blob/master/docs/gguf.md</a></li>
+<li><a href="https://huggingface.co/docs/hub/gguf">https://huggingface.co/docs/hub/gguf</a></li>
+</ul>
+<h2 id="llamacpp">llama.cpp</h2>
+<h3 id="%E5%8F%82%E6%95%B0%E8%BD%AC%E6%8D%A2">参数转换</h3>
+<p>首先转换模型到gguf格式，参考
+<a href="https://github.com/ggml-org/llama.cpp/blob/master/convert_hf_to_gguf.py#L4950">https://github.com/ggml-org/llama.cpp/blob/master/convert_hf_to_gguf.py#L4950</a></p>
+<p>如 python convert_hf_to_gguf.py --outtype f16 --print-supported-models /mnt/models/opt-6.7b/</p>
+<pre class="hljs"><code><div>模型转换流程:
+<span class="hljs-bullet">1. </span>从HF模型路径下加载config.json文件，读取模型配置
+hparams = Model.load<span class="hljs-emphasis">_hparams(dir_</span>model)
+<span class="hljs-bullet">
+2. </span>依据 hparams 的模型架构，得到llama.cpp定义的对应的模型，如：GPTNeoXForCausalLM，并进行初始化
+@Model.register("GPTNeoXForCausalLM")
+class GPTNeoXModel(Model):
+<span class="hljs-bullet">
+3. </span>然后调用llama.cpp定义的对应模型的接口，来完成模型转换
+model<span class="hljs-emphasis">_instance.set_</span>gguf_parameters() # 将config.json中的参数配置写入到gguf文件的metadata中
+model<span class="hljs-emphasis">_instance.set_</span>vocab()           # 进行词表转换，llama.cpp将词表数据也保存到了gguf文件中
+
+这里底层的逻辑是在<span class="hljs-code">`GGUF-py`</span>这个包里实现的<span class="hljs-code">`import gguf`</span>
+</div></code></pre>
+<p>如果模型没有定义不支持（如opt就不支持）</p>
+<ol>
+<li>先添加模型名称，参考
+<a href="https://github.com/ggml-org/llama.cpp/blob/master/convert_hf_to_gguf_update.py">https://github.com/ggml-org/llama.cpp/blob/master/convert_hf_to_gguf_update.py</a></li>
+</ol>
+<p>如添加opt则{&quot;name&quot;: &quot;opt-6.7b&quot;,&quot;tokt&quot;: TOKENIZER_TYPE.BPE, &quot;repo&quot;: &quot;<a href="https://huggingface.co/facebook/opt-6.7b">https://huggingface.co/facebook/opt-6.7b</a>&quot;, }添加完后需要运行convert_hf_to_gguf_update</p>
+<pre class="hljs"><code><div># Instructions:
+#
+# - Add a new model to the &quot;models&quot; list
+# - Run the script with your huggingface token:
+#
+#   python3 convert_hf_to_gguf_update.py &lt;huggingface_token&gt;
+#
+# - The convert_hf_to_gguf.py script will have had its get_vocab_base_pre() function updated
+# - Update llama.cpp with the new pre-tokenizer if necessary
+</div></code></pre>
+<ol start="2">
+<li>还要在convert_hf_to_gguf.py添加该模型识别参数的类，类似<code>class GPTNeoXModel(Model)</code></li>
+</ol>
+<p><mark>还没有太搞明白这里</mark></p>
+<h3 id="%E8%BF%90%E8%A1%8C">运行</h3>
+<pre class="hljs"><code><div>获取guuf格式模型后，编译llama.cpp，把cuda后端参数设置为on。
+
+git <span class="hljs-built_in">clone</span> https://github.com/ggerganov/llama.cpp
+
+cpu版本：
+cmake -B build
+cmake --build build --config release
+
+cuda版本：
+cmake -B build -DLLAMA_CUDA=ON
+cmake --build build --config release
+
+如果要调试，记得，cuda版本，-j(multiple <span class="hljs-built_in">jobs</span> 加速编译)：
+cmake -B build -DLLAMA_CUDA=ON -DCMAKE_BUILD_TYPE=Debug
+cmake --build build -j 8
+
+编译完成后运行测试,一个简单的生成测试为例，&lt;https://github.com/ggml-org/llama.cpp/blob/master/examples/simple/README.md&gt;
+CUDA_VISIBLE_DEVICES=0 ./build/bin/llama-simple -m /mnt/models/Llama-2-7b-hf/Llama-2-7B-hf-F16.gguf <span class="hljs-string">"Hello my name is"</span>
+
+成功后我们后面以最为通用的main方法进行解析：
+CUDA_VISIBLE_DEVICES=0 ./build/bin/llama-cli -m /mnt/models/Llama-2-7b-hf/Llama-2-7B-hf-F16.gguf --prompt <span class="hljs-string">"Once upon a time"</span> -n 128
+
+注意 -ngl 这个参数，它代表：n_gpu_layers，这个参数默认是 0，所以如果不设置为一个比较大的数字，整个模型就会到 CPU 上面跑，即便你用了 cublas 等各种编译参数也是在 CPU 上。
+</div></code></pre>
+<h3 id="%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90">代码分析</h3>
+<p>特点：先分配、后计算</p>
+<p>这是llama.cpp与其他python推理框架思想上最大的区别之一。即在进行实际计算时，需要对过程中所有可能用到的数据、信息提前分配内存。从而在实际推理计算过程中，做到“0”内存分配（虽然使用mmap之后，在运行最初阶段。计算时仍然会触发read来加载缺页）。这样设计的原因是作者认为在运行过程中，malloc等内存分配函数的计算开销太大，而作为一款以边缘计算为主的推理框架，应该尽可能减少这种开销。</p>
+<p>llama.cpp简要流程：</p>
+<ol>
+<li>通过c++构造qwen等model（调用算子来定义计算图），并将gguf中的数据加载到模型中</li>
+<li>model本质上是一个计算图，采用逐个算子调用和异步执行，不存在算子融合等操作</li>
+<li>支持kv-cache/flash attention(默认不启用)</li>
+<li>支持各种后端</li>
+</ol>
+<p>具体解析用ppt解析
+<a href="./llamacpp-powerinfer.pptx">llamacpp-powerinfer</a></p>
+<h2 id="powerinfer">powerinfer</h2>
+<h3 id="%E4%BD%BF%E7%94%A8">使用</h3>
+<p>编译和llama.cpp差不多,目前编译会有很多warning,但是可以正常编译。</p>
+<pre class="hljs"><code><div>cuda:
+cmake -S . -B build -DLLAMA_CUBLAS=ON
+cmake --build build --config Release
+
+cpu:
+cmake -S . -B build
+cmake --build build --config Release
+
+cuda调试：
+cmake -S . -B build -DLLAMA_CUBLAS=ON -DCMAKE_BUILD_TYPE=Debug
+cmake --build build -j 8
+
+</div></code></pre>
+<p>模型权重格式有区别，*.powerinfer.gguf，包括<strong>模型权重与预测器权重</strong></p>
+<pre class="hljs"><code><div>.
+├── *.powerinfer.gguf (Unquantized PowerInfer model)
+├── *.q4.powerinfer.gguf (INT4 quantized PowerInfer model, if available)
+├── activation (Profiled activation statistics for fine-grained FFN offloading)
+│   ├── activation_x.pt (Profiled activation statistics for layer x)
+│   └── ...
+├── *.[q4].powerinfer.gguf.generated.gpuidx (Generated GPU index at runtime for corresponding model)
+</div></code></pre>
+<p>转换模型参数from Original Model Weights + Predictor Weights至.powerinfer.gguf格式，参考</p>
+<pre class="hljs"><code><div>python convert.py --outfile ./ReluLLaMA-70B-PowerInfer-GGUF/llama-70b-relu.powerinfer.gguf ./SparseLLM/ReluLLaMA-70B ./PowerInfer/ReluLLaMA-70B-Predictor
+</div></code></pre>
+<p>推理参考</p>
+<pre class="hljs"><code><div># ./build/bin/main -m /PATH/TO/MODEL -n $output_token_count -t $thread_num -p $prompt --vram-budget $vram_gb
+# CUDA_VISIBLE_DEVICES=0 ./build/bin/main -m /mnt/models/prosparse-llama-2-7b-gguf/prosparse-llama-2-7b.gguf -n 64 -t 2 -p &quot;write a story of sysu&quot; --vram-budget 4
+
+batch推理参考 &lt;https://github.com/SJTU-IPADS/PowerInfer/blob/main/examples/batched/README.md&gt;
+</div></code></pre>
+<ul>
+<li>powerinfer同时也支持量化模型，使用方式相同；</li>
+<li>powerinfer暂时只支持ReLU/ReGLU/Squared，这三个激活函数，所以mistral, original llama,Qwen这些模型不支持,需要添加算子</li>
+</ul>
+<h3 id="%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90">代码解析</h3>
+<pre class="hljs"><code><div>官方提供的已经整合weight和predictor gguf的信息
+
+llama_model_loader: loaded meta data with 17 key-value pairs and 355 tensors from /mnt/models/prosparse-llama-2-7b-gguf/prosparse-llama-2-7b.gguf (version GGUF V3 (latest))
+
+每一层的模型参数：
+llama_model_loader: - tensor    1:           blk.0.attn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor    2:          blk.0.ffn_down_t.weight f16      [  4096, 11008,     1,     1 ]
+llama_model_loader: - tensor    3:            blk.0.ffn_gate.weight f16      [  4096, 11008,     1,     1 ]
+llama_model_loader: - tensor    4:              blk.0.ffn_up.weight f16      [  4096, 11008,     1,     1 ]
+llama_model_loader: - tensor    5:            blk.0.ffn_norm.weight f32      [  4096,     1,     1,     1 ]
+llama_model_loader: - tensor    6:              blk.0.attn_k.weight f16      [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor    7:         blk.0.attn_output.weight f16      [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor    8:              blk.0.attn_q.weight f16      [  4096,  4096,     1,     1 ]
+llama_model_loader: - tensor    9:              blk.0.attn_v.weight f16      [  4096,  4096,     1,     1 ]
+
+每一层预测器的参数
+llama_model_loader: - tensor  291:                 blk.0.fc1.weight f16      [  4096,  1024,     1,     1 ]
+llama_model_loader: - tensor  292:                 blk.0.fc2.weight f16      [  1024, 11008,     1,     1 ]
+</div></code></pre>
+<p>这里只解析和llama.cpp不一样的地方</p>
+<h2 id="integrate-sd-into-powerinfer">integrate sd into powerinfer</h2>
+<h3 id="sd-in-llamacpp">sd in llama.cpp</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># basic greedy speculative decoding</span>
+<span class="hljs-comment"># llama.cpp/examples/speculative-simple</span>
+<span class="hljs-comment"># vllm exp : temperature=0.8, top_p=0.95</span>
+
+<span class="hljs-comment"># -c size of the prompt context (default: %d, 0 = loaded from model)</span>
+<span class="hljs-comment"># "--draft-max", "--draft", "--draft-n" number of tokens to draft for speculative decoding</span>
+<span class="hljs-comment"># --draft-min minimum number of draft tokens to use for speculative decoding</span>
+<span class="hljs-comment"># --draft-p-min minimum speculative decoding probability (greedy)</span>
+<span class="hljs-comment"># --sampling-seq 采样方式</span>
+<span class="hljs-comment"># -fa enable Flash Attention</span>
+CUDA_VISIBLE_DEVICES=0 build/bin/llama-speculative-simple \
+    -m  /mnt/models/Llama-2-7b-hf/Llama-2-7B-hf-F16.gguf \
+    -md /mnt/models/llama-160m/llama-160M-F16.gguf \
+    -p <span class="hljs-string">"write a story of Little Red Riding Hood."</span> \
+    -c 0 -ngl 99 --color \
+    --sampling-seq p --top-p 0.95 -fa --temp 0.8 \
+    -ngld 99 --draft-max 16 --draft-min 5 --draft-p-min 0.9
+
+
+<span class="hljs-comment">#已解决：</span>
+<span class="hljs-comment">#上面的代码会遇到一些问题：</span>
+<span class="hljs-comment">#common_speculative_are_compatible: tgt: bos = 1 (1), eos = 2 (0)</span>
+<span class="hljs-comment">#common_speculative_are_compatible: dft: bos = 0 (1), eos = 2 (0)</span>
+<span class="hljs-comment">#所以我需要把这两个分词器特殊Id统一，我在想这个问题对训练预测器有没有影响（感觉没有）</span>
+<span class="hljs-comment">#这里经过多次尝试只需要改config.json的token id就可以正常跑起来，但是不确定有什么影响</span>
+
+</div></code></pre>
+<p>可以通过以下几个pr了解llama.cpp推测解码设计：</p>
+<p><a href="https://github.com/ggml-org/llama.cpp/pull/2926/commits/a15ca746c7fdc2425aaee48a62f5006a64ebb5bc">speculative : PoC for speeding-up inference via speculative sampling by ggerganov · Pull Request #2926 · ggml-org/llama.cpp</a></p>
+<p><a href="https://github.com/ggml-org/llama.cpp/pull/3624">speculative : add tree-based sampling example by ggerganov · Pull Request #3624 · ggml-org/llama.cpp</a></p>
+<p><a href="https://github.com/ggml-org/llama.cpp/pull/5625">Implement stochastic speculative sampling by mscheong01 · Pull Request #5625 · ggml-org/llama.cpp</a></p>
+<p><mark>据我所知，llama.cpp推测解码支持原始的greedy sampling, stochastic sampling, 以及tree-based sampling</mark></p>
+<ul>
+<li>--temp=0 -&gt; greedy</li>
+<li>--temp&gt;0 -&gt; stochastic</li>
+<li>--n_parallel(number of parallel sequences to decode) &gt; 1 -&gt; tree-based</li>
+</ul>
+<p><mark>需要注意的是，好像小模型的sample策略无法通过参数设置！可能需要手动设置</mark></p>
+<p>推测解码解析见ppt</p>
+<h3 id="integrate-into-powerinfer">integrate into powerinfer</h3>
+<h2 id="%E5%8F%82%E8%80%83">参考</h2>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV1Ez4y1w7fc">https://www.bilibili.com/video/BV1Ez4y1w7fc</a> 不错的视频解析llama.cpp</li>
+<li><a href="https://www.bilibili.com/video/BV1N4wreWE8z">https://www.bilibili.com/video/BV1N4wreWE8z</a> 较为详细解析llama.cpp</li>
+<li>llama.cpp源码解析--CUDA流程版本 - CodeLearner的文章 - 知乎
+https://zhuanlan.zhihu.com/p/665027154</li>
+<li><a href="https://zhuanlan.zhihu.com/p/691347732">https://zhuanlan.zhihu.com/p/691347732</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/25774381094">https://zhuanlan.zhihu.com/p/25774381094</a></li>
+<li><a href="https://huggingface.co/blog/zh/introduction-to-ggml">https://huggingface.co/blog/zh/introduction-to-ggml</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/19968327329">https://zhuanlan.zhihu.com/p/19968327329</a></li>
+<li>llama.cpp（持续更新） - 单单野草的文章 - 知乎 https://zhuanlan.zhihu.com/p/697880115</li>
+<li>笔记：Llama.cpp 代码浅析（一）：并行机制与KVCache - 刀刀宁的文章 - 知乎
+https://zhuanlan.zhihu.com/p/670515231</li>
+<li>笔记：Llama.cpp 代码浅析（二）：数据结构与采样方法 - 刀刀宁的文章 - 知乎
+https://zhuanlan.zhihu.com/p/671761052</li>
+</ul>
+
+</body>
+</html>

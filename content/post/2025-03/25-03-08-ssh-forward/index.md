@@ -9,7 +9,7 @@ math: true
 hidden: false
 comments: true
 draft: false
-categories : ['tool']
+categories : ['proxy']
 ---
 
 转发前提：

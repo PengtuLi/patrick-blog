@@ -334,21 +334,30 @@ llama_model_loader: - tensor  292:                 blk.0.fc2.weight f16      [  
 
 ```bash
 # basic greedy speculative decoding
-
 # llama.cpp/examples/speculative-simple
+# vllm exp : temperature=0.8, top_p=0.95
 
+# -c size of the prompt context (default: %d, 0 = loaded from model)
+# "--draft-max", "--draft", "--draft-n" number of tokens to draft for speculative decoding
+# --draft-min minimum number of draft tokens to use for speculative decoding
+# --draft-p-min minimum speculative decoding probability (greedy)
+# --sampling-seq 采样方式
+# -fa enable Flash Attention
 CUDA_VISIBLE_DEVICES=0 build/bin/llama-speculative-simple \
     -m  /mnt/models/Llama-2-7b-hf/Llama-2-7B-hf-F16.gguf \
-    -md /mnt/models/llama-68m/llama-68M-F16.gguf \
-    -p "write a intro of sysu university." -c 0 -ngl 99 --color \
-    --sampling-seq k --top-k 1 -fa --temp 0.0 \
+    -md /mnt/models/llama-160m/llama-160M-F16.gguf \
+    -p "write a story of Little Red Riding Hood." \
+    -c 0 -ngl 99 --color \
+    --sampling-seq p --top-p 0.95 -fa --temp 0.8 \
     -ngld 99 --draft-max 16 --draft-min 5 --draft-p-min 0.9
 
-上面的代码会遇到一些问题：
-common_speculative_are_compatible: tgt: bos = 1 (1), eos = 2 (0)
-common_speculative_are_compatible: dft: bos = 0 (1), eos = 2 (0)
-所以我需要把这两个分词器特殊Id统一，我在想这个问题对训练预测器有没有影响（感觉没有）
-这里经过多次尝试只需要改config.json的token id就可以正常跑起来，但是不确定有什么影响
+
+#已解决：
+#上面的代码会遇到一些问题：
+#common_speculative_are_compatible: tgt: bos = 1 (1), eos = 2 (0)
+#common_speculative_are_compatible: dft: bos = 0 (1), eos = 2 (0)
+#所以我需要把这两个分词器特殊Id统一，我在想这个问题对训练预测器有没有影响（感觉没有）
+#这里经过多次尝试只需要改config.json的token id就可以正常跑起来，但是不确定有什么影响
 
 ```
 
@@ -360,8 +369,15 @@ common_speculative_are_compatible: dft: bos = 0 (1), eos = 2 (0)
 
 [Implement stochastic speculative sampling by mscheong01 · Pull Request #5625 · ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp/pull/5625)
 
-推测解码解析：
+<mark>据我所知，llama.cpp推测解码支持原始的greedy sampling, stochastic sampling, 以及tree-based sampling</mark>
 
+- --temp=0 -> greedy
+- --temp>0 -> stochastic
+- --n_parallel(number of parallel sequences to decode) > 1 -> tree-based
+
+<mark>需要注意的是，好像小模型的sample策略无法通过参数设置！可能需要手动设置</mark>
+
+推测解码解析见ppt
 
 ### integrate into powerinfer
 
