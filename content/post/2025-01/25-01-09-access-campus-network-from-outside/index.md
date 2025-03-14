@@ -268,16 +268,76 @@ releases下载的frp是安全的，所以可能有以下原因
 
 {{</notice>}}
 
-#### 提升安全性 Frp+OpenVPN
+#### 提升安全性 Frp+vpn
 
 ![open vpn](openvpn.png)
 
 区别：
 
-- 公网云服务器：运行 FRP 服务端
-- 实验室内网服务器：运行 FRP 客户端、**安装 OpenVPN**
-- 外网计算机设备：**安装 OpenVPN** 进行连接
+1. 
 
-配置frp过程类似
+- 公网云服务器：运行 FRP 服务端
+- 实验室内网服务器：运行 FRP 客户端、**安装 VPN**
+- 外网计算机设备：**安装 VPN clinet** 进行连接
+
+内网搭建 OPENVPN 服务端， FRP 穿透 OPENVPN 服务端端口， 外网使用 OPENVPN 客户端连接 FRP 穿透端口连接 OPENVPN 服务端， RDP 客户端直连内网服务器
+
+2. 
+
+or FRPS服务器上部署一套VPN（我用的Softether VPN），网关对外只开放FPRS的注册端口，真正的映射端口只有连上VPN进入内网才能访问
+
+##### openvpn
 
 安装open vpn: https://github.com/angristan/openvpn-install
+
+```raw
+# frpc.toml
+
+[vpn_tcp]
+type = tcp
+#local_ip = 127.0.0.1
+local_port = 1194
+remote_port = 21194
+
+[vpn_udp]
+type = udp
+#local_ip = 127.0.0.1
+local_port = 1194
+remote_port = 21194
+
+# install script
+
+- IP address: 输入 local ip
+- Public IPv4 address: 输入公网服务器 ip
+- IPv6: n
+- port: 1 Defualt 1194
+- portocol: 2 TCP
+- DNS: 114.114.114.114
+- Secondary DNS: 8.8.8.8
+- compression: n
+- encrytion: n
+- Client name: test
+- password: 1 for passwordless or 2 for password
+# 若出现让输入加密短语的，输入一个自己记得住的密码就好
+
+# run openvpn client
+remote xxx.xxx.xxx.xxx 21194
+# 将默认的 1194 端口改成 FRP 转发端口 21194（上面FRP客户端配置文件配置的 remote port）
+
+# run openvpn server
+sudo systemctl enable openvpn@server
+```
+
+openssh client连接到服务器后，访问frp提供的内网ip 10.8.0.1即可实现访问服务器内网
+
+###### wireguard
+
+最终还是采用更好的wireguard
+
+- https://stanislas.blog/2019/01/how-to-setup-vpn-server-wireguard-nat-ipv6/
+
+install script : https://github.com/angristan/wireguard-install
+
+
+参考：
+https://www.v2ex.com/t/942047
