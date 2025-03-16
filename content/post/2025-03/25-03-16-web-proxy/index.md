@@ -12,7 +12,7 @@ draft: false
 categories : ['proxy']
 ---
 
-之前ssh如何设置转发的博客[ssh-forward]({{<ref "content/post/2025-03/25-03-08-ssh-forward/index.md">}})
+之前ssh如何设置转发的博客[ssh-forward]({{<ref "/post/2025-03/25-03-08-ssh-forward/index.md">}})
 
 我们了解到，其实ssh动态转发就是最简单的代理。
 
