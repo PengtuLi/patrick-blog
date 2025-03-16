@@ -14,4 +14,5 @@
   - [x] [note](#2312.11514v3)
 - **Mooncake: Trading More Storage for Less Computation — A KVCache-centric Architecture for Serving LLM Chatbot**. Ruoyu Qin et.al. **FAST**, **2025**, ([pdf](pdf/Mooncake.pdf))([link](https://www.usenix.org/system/files/fast25-qin.pdf))([slides](pdf/Mooncake_fast25_slides-qin.pdf/)).
   - [ ] [note](#fast25-qin)
-- {{2502.05431}}
+- **APE: Faster and Longer Context-Augmented Generation via Adaptive
+  Parallel Encoding**. Xinyu Yang et.al. **arxiv**, **2025**, ([pdf](pdf/APE__Faster_and_Longer_Context-Augmented_Generation_via_Adaptive___Parallel_Encoding.pdf))([link](http://arxiv.org/abs/2502.05431v2)).
