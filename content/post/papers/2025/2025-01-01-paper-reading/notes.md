@@ -19,3 +19,9 @@
 <mark>端侧推理(pc)，存储优化，激活稀疏，参数offload</mark>
 
 端侧设备（个人pc）内存有限，需要offload模型参数到flash中，本文关注激活稀疏场景下从flash（nvme nand）加载参数到dram的通信优化。nvme特点是线程越多chunk越大带宽就越大，同时激活稀疏利用预测器可以只加载少量神经元。本文提出1.滑动窗口作为缓存的依据，因为神经元有一定agggregate的特性，所以保留窗口大小以前激活的神经元，这样可以减少传输的数据大小。2.bind neuron，增加chunk size，提高带宽。3.提出了一个在dram放置管理neurons的方法，不过感觉作用不大。
+
+<a id="fast25-qin"></a>
+
+### Mooncake
+
+本文获得了fast25最佳论文奖，还是很牛的。
