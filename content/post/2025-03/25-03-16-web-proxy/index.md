@@ -1,9 +1,8 @@
 ---
 title: "Web Proxy"
 author : "tutu"
-description : "test"
-date: '2025-03-15
-lastmod: '2025-03-15
+date: '2025-03-15'
+lastmod: '2025-03-15'
 image:
 math: true
 hidden: false
@@ -17,7 +16,6 @@ categories : ['proxy']
 我们了解到，其实ssh动态转发就是最简单的代理。
 
 
----
 ## 代理原理
 
 - 第一层：由你的流量发起段到代理软件的接入端，比如你的浏览器到你使用的Clash。
