@@ -3,7 +3,7 @@ title: "Access Campus Network From Outside"
 author : "tutu"
 description:
 date: '2025-01-09'
-lastmod: '2025-03-10'
+lastmod: '2025-03-16'
 image:
 math: true
 hidden: false
@@ -14,21 +14,29 @@ categories : ['proxy']
 
 寒假回家，需要访问校园网内的服务器怎么办呢？
 
-目前可行的方法是通过学校提供的easyconnect软件进行流量转发,使用的应该是ssh隧道，但是每次使用都要登陆以及随机验证码验证，十分不方便，而且休眠后连接就会终端。
+目前可行的方法是通过学校提供的easyconnect软件进行流量转发,但是每次使用都要登陆以及随机验证码验证，十分不方便，而且只转发常用的端口，自定义的容器端口并不会转发。
 
 个人设备：
 
-- 内网服务器一台，无公网ip，配置了ssh服务
-- 内网主机一台，无公网ip，配置了todesk远程桌面
+- 内网服务器一台，有固定内网ip，配置了ssh服务
+- 内网主机一台，无公网ip
 - 外网笔记本一台，无公网ip
 - 云服务器一台，有公网ip
 
 经过调研，可行的方案：
 
-1. 通过内网穿透（如frp），反向代理到云服务器，外网笔记本访问云服务器去访问内网服务器[^1]
-2. 通过ssh反向代理
+1. 通过内网穿透（frp），反向代理到云服务器，外网笔记本访问云服务器去访问内网服务器。
+  * SSH采用key登陆，云服务器启用安全服务，自己启动如fail2ban禁止爆破
+  * 套一层vpn/vpn连接云服务器，不直接暴露内网端口
+  * 采用sfrp/xfrp协议，个人电脑连接也需frp
+2. 通过ssh反向代理，内网穿透到云服务器，和frp差不多
+3. 通过开源商用zerotier/easytire/tailscale进行异地组网，自建moon服务器转发流量
+4. 开源weireshark异地组网
+5. todesk/向日葵/teamviewer兜底
 
-## 方案一
+> 上面的方法来说没有专门考虑安全性，比如frp直接暴露内网端口到公网就存在安全问题
+
+## frp内网穿透
 
 ### 内网穿透
 
@@ -233,7 +241,7 @@ sudo systemctl status frps
 sudo systemctl enable frps
 ```
 
-### ui更改配置，直接使用
+### ui更改转发配置
 
 可以打开
 
@@ -244,7 +252,7 @@ sudo systemctl enable frps
 
 ### 注意:安全性问题
 
-可能安全上有一些问题，公司学校服务器还是谨慎使用，需要提升安全性。不要使用公司提供的frp服务，可能通过域名特点识别是frp从而进行爆破。
+安全上有一些问题，公司学校服务器还是谨慎使用，需要提升安全性。不要使用公司提供的frp服务，可能通过域名特点识别是frp从而进行爆破。
 
 {{<notice warning>}}
 <https://github.com/fatedier/frp/issues/2860>
@@ -268,7 +276,7 @@ releases下载的frp是安全的，所以可能有以下原因
 
 {{</notice>}}
 
-#### 提升安全性 Frp+vpn
+### 提升安全性 Frp+vpn
 
 ![open vpn](openvpn.png)
 
@@ -284,13 +292,15 @@ releases下载的frp是安全的，所以可能有以下原因
 
 2. 
 
-or FRPS服务器上部署一套VPN（我用的Softether VPN），网关对外只开放FPRS的注册端口，真正的映射端口只有连上VPN进入内网才能访问
+or FRPS服务器上部署一套VPN，网关对外只开放FPRS的注册端口和vpn端口，真正的映射端口只有连上VPN进入内网才能访问
 
-##### openvpn
+#### openvpn
 
 安装open vpn: https://github.com/angristan/openvpn-install
 
 ```raw
+# 这里是FRP 穿透 OPENVPN 服务端端口的配置
+
 # frpc.toml
 
 [vpn_tcp]
@@ -328,9 +338,9 @@ remote xxx.xxx.xxx.xxx 21194
 sudo systemctl enable openvpn@server
 ```
 
-openssh client连接到服务器后，访问frp提供的内网ip 10.8.0.1即可实现访问服务器内网
+对于`真正的映射端口只有连上VPN进入内网才能访问`方法，openssh client连接到服务器后，访问frp提供的内网ip 10.8.0.1即可实现访问服务器内网
 
-###### wireguard
+## wireguard
 
 最终还是采用更好的wireguard
 
