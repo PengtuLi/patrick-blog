@@ -31,6 +31,8 @@ FOR character = first to last (ok)
 
 - fine-grained: Note that the logic must be decomposed to the level of a single loop or decision. Thus "Search the list and find the customer with highest balance" is too **vague** because it takes a loop AND a nested decision to implement it.
 
+- Use mathematical notation when applicable.
+
 - structured: The "structured" part of pseudocode is a notation for representing six specific structured programming constructs: SEQUENCE, WHILE, IF-THEN-ELSE, REPEAT-UNTIL, FOR, and CASE. 
 
 ```md
@@ -44,5 +46,67 @@ FOR character = first to last (ok)
 # SEQUENCE
 all actions aligned with the same indent
 
-# 
+# IF-THEN-ELSE
+IF HoursWorked > NormalMax THEN
+    Display overtime message
+ELSE
+    Display regular time message
+ENDIF
+
+# WHILE
+WHILE Population < Limit
+    Compute Population as Population + Births - Deaths
+ENDWHILE
+
+# CASE
+CASE grade OF
+    A : points = 4
+    B : points = 3
+    C : points = 2
+    D : points = 1
+    F : points = 0
+    others : points = -1
+ENDCASE
+
+# REPEAT-UNTIL
+REPEAT
+    sequence
+UNTIL condition
+
+# FOR
+FOR each month of the year (good)
+FOR month = 1 to 12 (ok)
+FOR each employee in the list (good)
+FOR empno = 1 to listsize (ok)
+
+FOR each month of the year
+    sequence
+ENDFOR
+
+-----------------------------------
+
+#  INVOKING SUBPROCEDURES
+
+Use the CALL keyword. For example:
+
+CALL AvgAge with StudentAges
+CALL Swap with CurrentItem and TargetItem
+CALL Account.debit with CheckAmount
+CALL getBalance RETURNING aBalance
+CALL SquareRoot with orbitHeight RETURNING nominalOrbit
+```
+
+>"Pretty Good"  This example shows how pseudocode is written as comments in the source file.
+
+```raw
+public boolean moveRobot (Robot aRobot)
+{
+    //IF robot has no obstacle in front THEN
+        // Call Move robot
+        // Add the move command to the command history
+        // RETURN true
+    //ELSE
+        // RETURN false without moving the robot
+    //END IF
+}
 ```
