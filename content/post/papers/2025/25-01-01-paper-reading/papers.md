@@ -14,3 +14,4 @@
   - [x] [note](#2312.11514v3)
 - **Mooncake: Trading More Storage for Less Computation — A KVCache-centric Architecture for Serving LLM Chatbot**. Ruoyu Qin et.al. **FAST**, **2025**, ([pdf](pdf/Mooncake.pdf))([link](https://www.usenix.org/system/files/fast25-qin.pdf))([slides](pdf/Mooncake_fast25_slides-qin.pdf/)).
   - [ ] [note](#fast25-qin)
+- {{2502.05431}}
