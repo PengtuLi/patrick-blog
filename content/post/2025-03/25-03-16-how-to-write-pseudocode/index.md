@@ -35,7 +35,7 @@ FOR character = first to last (ok)
 
 - structured: The "structured" part of pseudocode is a notation for representing six specific structured programming constructs: SEQUENCE, WHILE, IF-THEN-ELSE, REPEAT-UNTIL, FOR, and CASE. 
 
-```md
+```raw
 **SEQUENCE** is a linear progression where one task is performed sequentially after another.
 **WHILE** is a loop (repetition) with a simple conditional test at its **beginning**.
 **IF-THEN-ELSE** is a decision (selection) in which a choice is made between two alternative courses of action.
