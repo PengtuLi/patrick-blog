@@ -26,9 +26,9 @@ categories : ['proxy']
 经过调研，可行的方案：
 
 1. 通过内网穿透（frp），反向代理到云服务器，外网笔记本访问云服务器去访问内网服务器。
-  * SSH采用key登陆，云服务器启用安全服务，自己启动如fail2ban禁止爆破
-  * 套一层vpn/vpn连接云服务器，不直接暴露内网端口
-  * 采用sfrp/xfrp协议，个人电脑连接也需frp
+    * SSH采用key登陆，云服务器启用安全服务，自己启动如fail2ban禁止爆破
+    * 套一层vpn/vpn连接云服务器，不直接暴露内网端口
+    * 采用sfrp/xfrp协议，个人电脑连接也需frp
 2. 通过ssh反向代理，内网穿透到云服务器，和frp差不多
 3. 通过开源商用zerotier/easytire/tailscale进行异地组网，自建moon服务器转发流量
 4. 开源weireshark异地组网
