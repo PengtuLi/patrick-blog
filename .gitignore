@@ -29,5 +29,5 @@ public
 resources
 
 # mac
-**/.DS_Store
-**/.obsidian
+.DS_Store
+.obsidian
