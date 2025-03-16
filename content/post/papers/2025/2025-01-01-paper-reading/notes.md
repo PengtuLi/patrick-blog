@@ -1,8 +1,8 @@
-## llm infer
+## note
+
+<a id="2407.05858v2"></a>
 
 ### Fast On-device LLM Inference with NPUs
-
-`D. Xu et al., “Fast On-device LLM Inference with NPUs,” Dec. 15, 2024, arXiv: arXiv:2407.05858. doi: 10.48550/arXiv.2407.05858.`
 
 <mark>端侧推理，npu+cpu，量化int8</mark>
 
@@ -12,9 +12,9 @@
 
 对于挑战1，提出了分块chunk与共享计算图，对于静态的计算图（如ffn），在不同chunk间共享，对于有序列位置依赖的计算图（如attention），不共享计算图；对于挑战2，提出了Shadow outlier execution，mllm.npu采取了per-tensor的量化方法以适应npu的结构，对于激活值中的离群值，将浮点部分移动到cpu上计算，最后合并结果。对于npu,cpu内存地址空间不共享，需要复制离群值对应的权重，这里采用了统计分析哪些channel容易出现离群值（hot,集中），预先复制，cold的权重按需从磁盘加载；对于挑战3，主要是解决如何协调npu/cpu间计算的问题，按chunk顺序调度然后重合计算肯定是不可行的，因为ATTENTION计算会变化，这里采用的是乱序执行，只要满足数据依赖关系，就可以执行，这里考虑的依赖包括chunk内部的依赖以及跨chunk的依赖。因为实验发现npu执行时间占推理的主要部分，所以是关键路径，我们要尽可能减少npu执行的停滞。所以对于具体调度来说，优先在cpu上调度subgraph(满足的后续依赖可以让npu执行最久)，在npu上则优先调度执行时间最长的subgraph。
 
-### LLM in a flash: Efficient Large Language Model Inference with Limited Memory
+<a id="section2"></a>
 
-`K. Alizadeh et al., “LLM in a flash: Efficient Large Language Model Inference with Limited Memory,” Jul. 30, 2024, arXiv: arXiv:2312.11514. doi: 10.48550/arXiv.2312.11514.`
+### LLM in a flash
 
 <mark>端侧推理(pc)，存储优化，激活稀疏，参数offload</mark>
 
