@@ -16,5 +16,33 @@ categories : ['deep learning']
 
 ## vllm 推测解码伪代码分析
 
+```raw
+// implement sd class
+// Only top-1 proposal and scoring are implemented. Tree-attention is left as future work.
+class SpecDecodeWorker：
+    function execute_model(execute_model_req):
+        if rank != driver_rank:
+            _run_non_driver_rank()
+            return []
+        if execute_model_req is None:
+            broadcast empty input to stop other workers
+            return []
+        track finished requests
+        check if all speculation should be disabled
+        determine if it's prefill phase or other cases where speculation is not used
+        broadcast necessary info to non-driver workers
+        if speculation is disabled:
+            run models without speculation
+            handle hidden states and prepare for next step
+            serialize output if logprobs are disabled
+            return the result
+        else:
+            run speculative decoding step
+            generate proposals using draft worker
+            score proposals using scoring worker
+            verify tokens to determine accepted ones
+            create output sampler list based on accepted tokens
+            track sequences with bonus tokens
+            return the sampler output list
 
-
+```
