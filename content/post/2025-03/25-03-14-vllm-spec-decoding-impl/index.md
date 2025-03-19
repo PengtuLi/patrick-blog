@@ -20,13 +20,11 @@ categories : ['deep learning']
 // implement sd class
 // Only top-1 proposal and scoring are implemented. Tree-attention is left as future work.
 class SpecDecodeWorker：
+
+    // Perform speculative decoding on the input batch.
     function execute_model(execute_model_req):
-        if rank != driver_rank:
-            _run_non_driver_rank()
-            return []
-        if execute_model_req is None:
-            broadcast empty input to stop other workers
-            return []
+        
+        
         track finished requests
         check if all speculation should be disabled
         determine if it's prefill phase or other cases where speculation is not used

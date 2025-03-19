@@ -24,4 +24,10 @@
 
 ### Mooncake
 
-本文获得了fast25最佳论文奖，还是很牛的。
+<mark>serving，</mark>
+
+本文获得了fast25最佳论文奖，还是很牛的。本文的场景是巨大的Mass，该场景的特点是在满足SLO下最大化吞吐量。
+
+
+
+在prefill阶段，kvcache前缀重用可以大大减小计算量，原始计算量$\text{flops}(n) = l \times (a n^2 d + b n d^2)$，假设n token中有前p个token被重用，则计算量变为原来的$\frac{p}{n}^2$本文基于kv-cache的重用
