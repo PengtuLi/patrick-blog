@@ -26,8 +26,13 @@
 
 <mark>serving，</mark>
 
-本文获得了fast25最佳论文奖，还是很牛的。本文的场景是巨大的Mass，该场景的特点是在满足SLO下最大化吞吐量。
+本文获得了fast25最佳论文奖，还是很牛的。本文的场景是巨大的Mass，该场景的特点是在满足SLO下最大化吞吐量。当然，这里有一个前置的配置就是说prefill与decode instance分离（普遍做法）。
 
+在prefill阶段，kvcache前缀重用可以大大减小计算量，原始计算量$\text{flops}(n) = l \times (a n^2 d + b n d^2)$，假设n token中有前p个token被重用，则计算量变为原来的$(\frac{p}{n})^2$。假如kvcache不在prefill节点，则需要加载而只要传输时间小于减少部分计算时间，就有收益，经过计算llama3-70b + 1node(8*h800)只要20GB/s带宽（min NIC&h2d）即可，而这是很容易满足的。所以本文就提出核心思想`trading more storage for
+less computation`，利用上一切可以用上的存储资源（DRAM,SSD,RDMA），尽可能提高prefix hit rate。挑战无非是：要提高hit rate,存储的kvcache就要很大，怎么存的问题；相对应的就是分布式环境不同设备传输kvcache的带宽问题；另一个就是基于serving的环境以及目标如何最优化调度的问题喽。
 
+当一个请求到来时，调度器根据工作负载与kv cache状态调度到一个prefill与decode node pair。与传统的区别就是prefill前会进行Kvcache重用的加载，以及decode前会通过文件系统MOONCAKE Store传输到decode node(与prefill重叠)。
 
-在prefill阶段，kvcache前缀重用可以大大减小计算量，原始计算量$\text{flops}(n) = l \times (a n^2 d + b n d^2)$，假设n token中有前p个token被重用，则计算量变为原来的$\frac{p}{n}^2$本文基于kv-cache的重用
+**MOONCAKE Store**，page block存储（page attention），hash id标记自己及prefix。
+
+如果需要利用一切可以用上的存储资源，那么如何统一管理这个pool就是一个很麻烦的问题。本文提出Conductor作为全局调度器，
