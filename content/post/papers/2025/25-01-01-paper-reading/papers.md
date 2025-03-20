@@ -18,3 +18,4 @@
   Parallel Encoding**. Xinyu Yang et.al. **ICLR**, **2025**, ([pdf](pdf/APE__Faster_and_Longer_Context-Augmented_Generation_via_Adaptive___Parallel_Encoding.pdf))([link](http://arxiv.org/abs/2502.05431v2))([open review](https://openreview.net/forum?id=yUC8pU508S)).
   - [ ] [note](#2502.05431v2)
 - **KVLink: Accelerating Large Language Models via Efficient KV Cache Reuse**. Jingbo Yang et.al. **arxiv**, **2025**, ([pdf](pdf/KVLink__Accelerating_Large_Language_Models_via_Efficient_KV_Cache_Reuse.pdf))([link](http://arxiv.org/abs/2502.16002v1)).
+  - [ ] [note](#2502.16002)
