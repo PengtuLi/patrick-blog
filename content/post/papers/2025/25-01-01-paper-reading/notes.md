@@ -28,11 +28,27 @@
 
 本文获得了fast25最佳论文奖，还是很牛的。本文的场景是巨大的Mass，该场景的特点是在满足SLO下最大化吞吐量。当然，这里有一个前置的配置就是说prefill与decode instance分离（普遍做法）。
 
-在prefill阶段，kvcache前缀重用可以大大减小计算量，原始计算量$\text{flops}(n) = l \times (a n^2 d + b n d^2)$，假设n token中有前p个token被重用，则计算量变为原来的$(\frac{p}{n})^2$。假如kvcache不在prefill节点，则需要加载而只要传输时间小于减少部分计算时间，就有收益，经过计算llama3-70b + 1node(8*h800)只要20GB/s带宽（min NIC&h2d）即可，而这是很容易满足的。所以本文就提出核心思想`trading more storage for
-less computation`，利用上一切可以用上的存储资源（DRAM,SSD,RDMA），尽可能提高prefix hit rate。挑战无非是：要提高hit rate,存储的kvcache就要很大，怎么存的问题；相对应的就是分布式环境不同设备传输kvcache的带宽问题；另一个就是基于serving的环境以及目标如何最优化调度的问题喽。
+在prefill阶段，kvcache前缀重用可以大大减小计算量，原始计算量$\text{flops}(n) = l \times (a n^2 d + b n d^2)$，假设n token中有前p个token被重用，则计算量变为原来的$(\frac{p}{n})^2$。假如kvcache不在prefill节点，则需要加载而只要传输时间小于减少部分计算时间，就有收益，经过计算llama3-70b + 1node(8*h800)只要20GB/s带宽（min NIC&h2d）即可，而这是很容易满足的。所以本文就提出核心思想`trading more storage for less computation`，利用上一切可以用上的存储资源（DRAM,SSD,RDMA）来持久化存储kv cache，尽可能提高prefix hit rate。挑战无非是：要提高hit rate,存储的kvcache就要很大，怎么存的问题；相对应的就是分布式环境不同设备传输kvcache的带宽问题；另一个就是基于serving的环境以及目标如何最优化调度的问题喽。
 
 当一个请求到来时，调度器根据工作负载与kv cache状态调度到一个prefill与decode node pair。与传统的区别就是prefill前会进行Kvcache重用的加载，以及decode前会通过文件系统MOONCAKE Store传输到decode node(与prefill重叠)。
 
-**MOONCAKE Store**，page block存储（page attention），hash id标记自己及prefix。
+这里再补充一点RDMA的知识:
+传统网络传输路径`用户空间缓冲区 → 内核空间缓冲区 → 协议栈处理 → NIC发送`
+RDMA 传输路径`用户空间缓冲区 → RDMA NIC直接访问（通过虚拟地址映射）`
 
-如果需要利用一切可以用上的存储资源，那么如何统一管理这个pool就是一个很麻烦的问题。本文提出Conductor作为全局调度器，
+**MOONCAKE Store**，page block存储（page attention），hash id标记自己及prefix,**LRU逐出策略**。这里设计到分布式的文件传输api设计，一个是kv cache包装后的存取复制等api,一个是跨节点的传输api。为了实现这些api,需要设计一个transfer engine,对于跨节点传输（local dram/vram to renote location using RDMA NIC）的带宽限制的问题（本地DRAM/VRAM → UPI → PCIe Switch → RDMA NIC → 网络），通过Topology-aware path selection的方法实现动态RDMA路径的选择，同时将传输请求分片均衡RDMA NIC负载。
+
+对于prefill,文章说是用了一个chunked pipeline parallelism (CPP) ，不过我没感觉这个东西和序列并行的区别？有待讨论。
+
+对于prefill调度，给予该请求prefill time（预测而来） + local排队时间，prefill time通过该Instance重用前缀数量及请求长度预测得到（offline训练）。这里并不会以最大的匹配前缀来确定调度到哪个instance，有一个kv-cache负载平衡的算法，同时这样做可以做到自动复制热点的前缀。
+
+实验来说设备很豪华，16 * node( eight NVIDIA-A800-SXM4-80GB GPUs and four 200 Gbps RDMA NICs.),模型LLaMA3-70B
+这里的一个亮点就是细分了使用场景：Conversation Tool&Agent Synthetic（长序列），mooncake遵循slo还是很不错的。
+对于llama3-70b,假设1node-1T mooncake-cache- 3M tokens - 50% theoretical maximum hit rate，而且100%max hit rate则需约50M tokens - 20node,太恐怖了。
+这里对于hot cache的分析也很有意思，比如agent场景，hot key几乎每个node都保存了。
+
+<a id="2502.05431v2"></a>
+
+### APE
+
+test
