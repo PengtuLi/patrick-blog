@@ -24,7 +24,7 @@
 
 ### Mooncake
 
-<mark>serving，</mark>
+<mark>serving，分布式kv-cache存储，prefill-decode分离</mark>
 
 本文获得了fast25最佳论文奖，还是很牛的。本文的场景是巨大的Mass，该场景的特点是在满足SLO下最大化吞吐量。当然，这里有一个前置的配置就是说prefill与decode instance分离（普遍做法）。
 
@@ -50,6 +50,9 @@ RDMA 传输路径`用户空间缓冲区 → RDMA NIC直接访问（通过虚拟�
 <a id="2502.05431v2"></a>
 
 ### APE
+
+<mark></mark>
+
 
 
 <a id="2502.16002"></a>
