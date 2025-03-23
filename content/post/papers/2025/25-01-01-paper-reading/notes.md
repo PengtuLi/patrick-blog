@@ -4,8 +4,6 @@
 
 ### Fast On-device LLM Inference with NPUs
 
-<mark>端侧推理，npu+cpu，量化int8</mark>
-
 这篇是很经典的一篇利用NPU在端侧加速推理的一篇文章，已经被ASPLOS25录用。因为隐私计算的需求，以及手机性能的提高，端侧运行llm越来越可行，但是端到端延迟不符合要求。本文重点关注端侧的prefill阶段加速，在长序列的任务中，这部分计算延时占比可以达到80%以上。因为prefill阶段是计算密集型，且npu擅长整数并行运算且广泛存在于手机中，另外手机cpu/gpu并行计算能力相对于消费级gpu并行能力差，所以用npu加速prefill阶段的推理是很符合直觉的。
 
 核心思想：在量化的模型下，在prefill阶段将尽可能多的整数计算移动到npu上执行，同时将浮点运算在cpu/gpu上执行。挑战：1.对于变长的prompt，npu只支持静态大小的操作，准备工作(构建优化计算图)耗时；2.npu计算与sota量化方法不匹配，常用的per-group量化无法在npu上执行，需要拆分矩阵运算；3.npu不擅长浮点运算，而attention和layernorm往往需要浮点计算以保持精度。
@@ -16,15 +14,11 @@
 
 ### LLM in a flash
 
-<mark>端侧推理(pc)，存储优化，激活稀疏，参数offload</mark>
-
 端侧设备（个人pc）内存有限，需要offload模型参数到flash中，本文关注激活稀疏场景下从flash（nvme nand）加载参数到dram的通信优化。nvme特点是线程越多chunk越大带宽就越大，同时激活稀疏利用预测器可以只加载少量神经元。本文提出1.滑动窗口作为缓存的依据，因为神经元有一定agggregate的特性，所以保留窗口大小以前激活的神经元，这样可以减少传输的数据大小。2.bind neuron，增加chunk size，提高带宽。3.提出了一个在dram放置管理neurons的方法，不过感觉作用不大。
 
 <a id="fast25-qin"></a>
 
 ### Mooncake
-
-<mark>serving，分布式kv-cache存储，prefill-decode分离</mark>
 
 本文获得了fast25最佳论文奖，还是很牛的。本文的场景是巨大的Mass，该场景的特点是在满足SLO下最大化吞吐量。当然，这里有一个前置的配置就是说prefill与decode instance分离（普遍做法）。
 
@@ -47,13 +41,19 @@ RDMA 传输路径`用户空间缓冲区 → RDMA NIC直接访问（通过虚拟�
 对于llama3-70b,假设1node-1T mooncake-cache- 3M tokens - 50% theoretical maximum hit rate，而且100%max hit rate则需约50M tokens - 20node,太恐怖了。
 这里对于hot cache的分析也很有意思，比如agent场景，hot key几乎每个node都保存了。
 
+<a id="2402.16617"></a>
+
+### CEPE
+
+比较早提出并行编码方式的工作。使用的trainable的方法，对于原本的大模型，增加了一个encoder编码不同上下文，同时在大模型的每一层增加了一个cross-attention layer,用于将prompt关注外部context。
+
 <a id="2502.05431v2"></a>
 
 ### APE
 
-<mark></mark>
-
-
+因为说发现trainable的方法对于处理复杂推理任务的性能不行，本文采用了一种training-free的方法。基于不同context的kvcache的相似性，
+内在性质证明了不同上下文的kvcache是可以组合的。并针对并行解码效果下降的原因进行了分析。针对头部attention sink导致的异常高的attention score,
+采用共享前缀；为使不同上下文拼接后attention score更平滑，对注意力计算增加了温度参数，并针对该温度参数影响attention score绝对值的问题在attention score后增加了一个缩放因子抵消该影响。
 
 <a id="2502.16002"></a>
 
