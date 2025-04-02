@@ -381,9 +381,13 @@ CUDA_VISIBLE_DEVICES=0 build/bin/llama-speculative-simple \
 
 ### integrate into powerinfer
 
-- 遇到的一个问题llama160m prefill的时候第一个token没有输出
+- 遇到的一个问题llama160m prefill的时候第一个token（eos）没有输出，但是7b模型就不会,但是不影响结果
 - 关于重复输出的问题，这应该与模型性能与采样的参数设置有关，有专门的penalty参数控制重复生成。
 - 虽然可以稀疏得跑，但可能需要修改powerinfer算子，以适应矩阵乘
+- 关于支持树状推测解码
+- 目前小模型采样使用greedy
+- 大模型目前使用的是greddy,参考原来代码加入stochastic
+- error: failed to apply previously generated gpu split from '/mnt/models/prosparse-llama-2-7b-powerinfer/prosparse-llama-2-7b.gguf.generated.gpuidx
 
 ### 参考一下vllm的实现逻辑
 
