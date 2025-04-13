@@ -1,5 +1,5 @@
 ---
-title: "Atomic Habit Chapter 1"
+title: "Atomic Habit"
 author : "tutu"
 description:
 date: '2024-12-17'
@@ -9,7 +9,8 @@ math: true
 hidden: false
 comments: true
 draft: false
-categories : ["reading"]
+categories : ['book']
+
 ---
 
 

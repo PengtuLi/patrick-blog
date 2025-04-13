@@ -49,3 +49,9 @@
 - **Liger: Interleaving Intra- and Inter-Operator Parallelism for Distributed Large Model Inference**. Du Jiangsu et.al. **ppopp24**, **2024-2-20**, ([link](https://doi.org/10.1145/3627535.3638466))([pdf](pdf/Liger_ppopp24.pdf)).
   - [x] [ppt](./doc/24-11-02-Liger.pptx)
 
+>2025-03
+
+- **Fire-Flyer AI-HPC: A Cost-Effective Software-Hardware Co-Design for Deep
+  Learning**. Wei An et.al. **SC24**, **2024**, ([pdf](pdf/Fire-Flyer_AI-HPC__A_Cost-Effective_Software-Hardware_Co-Design_for_Deep___Learning.pdf))([link](http://arxiv.org/abs/2408.14158v2)).
+  - [] ppt
+  - [] [note](#FF-AI-HPC)

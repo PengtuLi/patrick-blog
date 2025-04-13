@@ -59,4 +59,10 @@ RDMA 传输路径`用户空间缓冲区 → RDMA NIC直接访问（通过虚拟�
 
 ### KVLink
 
+<a id="FF-AI-HPC"></a>
+
+### Fire-Fly HPC
+
+deepseek的萤火AI系统的设计，主要介绍了cost-effective的AI-HPC设计（万卡PCIE A100），对标英伟达的DGX-A100设计。主要包括5方面的设计，
+一个是网络的设计上，一个是计算通信重叠的HFREDUCE（对标NCCL），一个是存储3FS，一个是HaiScale用于并行方法优化，一个是HAI调度系统错误恢复等。
 
