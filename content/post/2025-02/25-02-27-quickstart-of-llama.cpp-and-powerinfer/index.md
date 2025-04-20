@@ -586,7 +586,46 @@ WHILE not meet eos in decode stage
 ENDWHILE
 
 ```
+### powerinfer 算子调用
 
+```raw
+// 以prosparse-7b为例
+
+// for each llama_decode step, first build graph then compute graph
+llama_build_graph()
+    build_llama_variants() // llama.cpp 6687
+        llm_build_ffn_sparse // llama.cpp 4652
+            ggml_mul_mat() // predictor计算图构建 算子GGML_OP_MUL_MAT ggml.c 4074
+	    llm_build_sparse_mul_mat() // gate计算图构建 llama.cpp 4546
+	        ggml_mul_mat_idx() // hybrid inference 算子GGML_OP_MUL_MAT_SPARSE llama.cpp 4126
+	    llm_build_sparse_axpy() // llama.cpp 4599
+	    	ggml_axpy() // 加权相加结果合并 算子GGML_OP_AXPY ggml.c 4158
+
+// compute graph
+ggml_graph_compute_helper() // llama.cpp 749
+    ggml_graph_compute_thread() // 计算的线程 ggml.c 16857
+        ggml_compute_forward() // 根据不同算子类型选择算子执行 ggml.c 14784
+	// note: if is cuda exec, then will be ggml_cuda_compute_forward() ggml-cuda.cu 9128
+	    ggml_compute_forward_mul_mat() // 类型GGML_OP_MUL_MAT ggml.c 9598
+
+	    ggml_compute_forward_mul_mat_sparse() // 类型GGML_OP_MUL_MAT_SPARSE ggml.c 14030
+	        // if using cuda
+		ggml_cuda_mul_mat_sparse() // ggml-cuda.cu 8787
+	            ggml_cuda_op_mul_mat_batch_sparse() ggml-cuda.cu 6994
+	    	        convert_mul_mat_batch_f16_cuda_sparse()
+	    	    	    dequantize_mul_mat_batch_sparse // cuda kernel
+
+	    ggml_compute_forward_mul_mat_axpy() // 类型GGML_OP_AXPY ggml.c 14314
+
+主要调用算子：
+在草稿阶段
+dequantize_mul_mat_vec
+并行验证阶段
+dequantize_mul_mat_batch_sparse
+dequantize_mul_mat_axpy_sparse_batch
+ampere_h16816gemm_128x64_ldg8_stages_64x3_tn
+
+```
 
 ## 参考
 
