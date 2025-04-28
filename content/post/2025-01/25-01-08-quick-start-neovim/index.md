@@ -105,7 +105,10 @@ echo "source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ${ZDOTDIR:-$
 - zsh-completions
 git clone https://github.com/zsh-users/zsh-completions.git ~/.zsh/zsh-completions
 echo "source ~/.zsh/zsh-completions/zsh-completions.plugin.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
-
+# autojump
+# brew install autojump
+# lazygit
+brew install jesseduffield/lazygit/lazygit
 ```
 
 ![after plugin](customized_oh_my_zsh.png)
