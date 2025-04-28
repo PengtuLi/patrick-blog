@@ -38,7 +38,7 @@ categories : ['thinking']
 
 ### 读博士期间如何提高代码能力？
 
-方法论上：
+技巧上：
 
 1. 避免写代码时复制粘贴：这点我觉得说的很对，复制粘贴的一会就忘了，就算认真看了逻辑，也大概只有一个浅显印象，就算知道要怎么做，下次类似的事情还是得gpt搜代码。**所以就算是生成的代码，也应该自己上手敲进去。**
 
@@ -50,10 +50,13 @@ categories : ['thinking']
 
 5. 一个非常重要的点是先完成，再不断优化，不要因为过于追求完美而浪费时间。talk is cheap!
 
-实践上：
+方法论上：
 
-最快的实操方式就是套伪代码去解决。
+1. 新手期：对语法、算法、数据结构不熟悉，刷leetcode简单题，模仿题解
 
+2. 提升：找短小的项目做，关注其实现与设计
+
+3. 进阶：反复改进自己写过项目的代码（别人相关的写法、设计、AI复盘）
 
 
 ### 计算机专业想好好搞科研，建议平时刷leetcode吗，会不会浪费时间？
@@ -158,8 +161,45 @@ This is absolutely what I would recommend. We don't have to try and understand l
 
 更新一些学习的方向在这里，不断更新
 
-### MLSYS
+### 2025 
 
+https://www.bilibili.com/video/BV1du4y1B7L6?vd_source=a7c922a84c8a8ecd0eb4a4fbe08d2038&spm_id_from=333.788.videopod.sections
+熊爷这个up主挺好的
+
+先做一个文件系统试一下
+https://www3.nd.edu/~pbui/teaching/cse.30341.fa19/project06.html
+
+OS课-MIT 6.S081
+
+并行计算
+
+CMU15418
+
+CS149
+
+分布式系统- MIT6.824
+
+MLsys CMU
+https://dlsyscourse.org/lectures/
+
+minitorch项目
+https://minitorch.github.io/
+
+Mini-llama.cpp
+https://github.com/karpathy/llama2.c?tab=readme-ov-file
+
+TinyML and Efficient Deep Learning Computing
+https://hanlab.mit.edu/courses/2024-fall-65940
+
+开源书
+https://openmlsys.github.io/#
+
+Machine Learning Compilation-编译器
+https://mlc.ai/summer22-zh/
+
+李沐读论文
+
+Cuda opencl
 
 
 ## 参考
