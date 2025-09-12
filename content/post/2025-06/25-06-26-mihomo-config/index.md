@@ -7,7 +7,14 @@ math: true
 hidden: false
 comments: true
 draft: false
-categories : ['book']
 ---
 
 本文主要讲一下clash-mihomo core的配置
+
+实现的目标：
+
+1. 局域网内可翻墙
+2. 秒开网页
+3. 精准分流
+4. 机场聚合，故障切换
+5. DNS防污染
