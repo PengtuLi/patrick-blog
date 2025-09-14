@@ -51,14 +51,25 @@ categories: ["linux"]
   - display manager
   - window manager
   - xwayland like
-- 中文字体 sudo pacman -S adobe-source-han-serif-cn-fonts wqy-zenhei # 安装几个开源中文字体。一般装上文泉驿就能解决大多 wine 应用中文方块的问题
-
+- 中文字体
+  - sudo pacman -S adobe-source-han-serif-cn-fonts wqy-zenhei # 安装几个开源中文字体。一般装上文泉驿就能解决大多 wine 应用中文方块的问题
+  - 有需要可以装微软的字体 yay -S ttf-ms-win11-auto-zh_cn
+  - 配置中文字体 https://wiki.archlinuxcn.org/wiki/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%E6%9C%AC%E5%9C%B0%E5%8C%96
+- 为图形界面配置中文 locale
+  - ~/.xprofile 加入 export LANGUAGE=zh_CN:en_US
 - 安装输入法
 - 音频
 - 蓝牙
 - snapshot
   - grub util
 - 显卡驱动
+- 如果显示过小可以设置SDDM的dpi
+
+## 其他
+
+- 有需要可以更换内核
+- 可以配置休眠到swap分区
+- 功耗控制,超频啥的 https://wiki.archlinux.org/title/TLP_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
 
 ## 参考
 
