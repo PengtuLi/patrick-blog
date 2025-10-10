@@ -1,8 +1,0 @@
-baseURL = 'https://patrickli.life/'
-languageCode = 'en-us'
-defaultContentLanguage = "en"
-title = "The site of tutu"
-theme = 'hugo-theme-stack'
-
-# build future blog
-buildFuture = true
