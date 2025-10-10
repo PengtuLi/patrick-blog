@@ -1,14 +1,10 @@
-# Page 1
-
-## Introduction
-
 > “Think different.” —— Apple Inc.
 
 Hi all, thank you for visiting here ;-)
 
 ### Changelogs
 
-* 07/2025: Create this repo.
+- 07/2025: Create this repo.
 
 ### License
 
