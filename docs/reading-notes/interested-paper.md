@@ -1,22 +1,18 @@
 ---
 title: "Interested Paper"
-author : "tutu"
-description:
-date: '2025-03-08'
-lastmod: '2025-03-08'
-image:
-math: true
+author: "tutu"
+date: "2025-03-08"
+lastmod: "2025-03-08"
 hidden: false
 comments: true
 draft: false
-categories : ['paper reading']
+categories: ["paper reading"]
 ---
-
 
 `M. Shoeybi, M. Patwary, R. Puri, P. LeGresley, J. Casper, and B. Catanzaro, “Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism,” Mar. 13, 2020, _arXiv_: arXiv:1909.08053. doi: [10.48550/arXiv.1909.08053](https://doi.org/10.48550/arXiv.1909.08053).`
 
 - NLP发展--考虑阅读公众号
-- http://arxiv.org/abs/1606.08415 gelu，gpt-2  bert
+- http://arxiv.org/abs/1606.08415 gelu，gpt-2 bert
 - Albert: A lite bert for self-supervised learning of language representations bert改进
 - waek scaling
 
@@ -24,9 +20,7 @@ categories : ['paper reading']
 
 S. Choi, I. Koo, J. Ahn, M. Jeon, and Y. Kwon, “{EnvPipe}: Performance-preserving {DNN} Training Framework for Saving Energy,” presented at the 2023 USENIX Annual Technical Conference (USENIX ATC 23), 2023, pp. 851–864. Accessed: Oct. 24, 2024. [Online]. Available: [https://www.usenix.org/conference/atc23/presentation/choi](https://www.usenix.org/conference/atc23/presentation/choi)
 
-
 A. Faiz _et al._, “LLMCarbon: Modeling the end-to-end Carbon Footprint of Large Language Models,” Jan. 19, 2024, _arXiv_: arXiv:2309.14393. doi: [10.48550/arXiv.2309.14393](https://doi.org/10.48550/arXiv.2309.14393).
-
 
 `A. K. Kakolyris, D. Masouros, P. Vavaroutsos, S. Xydis, and D. Soudris, “SLO-aware GPU Frequency Scaling for Energy Efficient LLM Inference Serving,” Aug. 05, 2024, _arXiv_: arXiv:2408.05235. doi: [10.48550/arXiv.2408.05235](https://doi.org/10.48550/arXiv.2408.05235).`
 
@@ -45,7 +39,7 @@ pp. 1–9. [Online]. Available: https://doi.org/10.1109/HPEC58863.2023.
 10363447
 
 - 何为slo
-- 为什么prefill是计算密集 
+- 为什么prefill是计算密集
 
 [43] P. Patel, E. Choukse, C. Zhang, A. Shah, I. Goiri, S. Maleki, and R. Bianchini, “Splitwise: Efficient generative llm inference using phase splitting,” in ISCA, June 2024
 
@@ -69,7 +63,7 @@ ATC 2021, July 14-16, 2021, I. Calciu and G. Kuenning, Eds.
 USENIX Association, 2021, pp. 473–487. [Online]. Available:
 https://www.usenix.org/conference/atc21/presentation/kumbhare
 
-- stream of request, workload 
+- stream of request, workload
 
 [59] Y. Wang, Y. Chen, Z. Li, X. Kang, Z. Tang, X. He, R. Guo, X. Wang,
 Q. Wang, A. C. Zhou, and X. Chu, “Burstgpt: A real-world workload
@@ -92,9 +86,7 @@ right-sizing for spatial partitioned gpu inference servers,” in 2023 IEEE Inte
 spatial sharing of gpus for a scalable inference platform,” in Proceedings of the 11th ACM Symposium on Cloud Computing, 2020, pp. 492–506
 ```
 
-
 B. Li, S. Samsi, V. Gadepally, and D. Tiwari, “Clover: Toward Sustainable AI with Carbon-Aware Machine Learning Inference Service,” in _Proceedings of the International Conference for High Performance Computing, Networking, Storage and Analysis_, in SC ’23. New York, NY, USA: Association for Computing Machinery, Nov. 2023, pp. 1–15. doi: [10.1145/3581784.3607034](https://doi.org/10.1145/3581784.3607034).
-
 
 J. Stojkovic, C. Zhang, Í. Goiri, J. Torrellas, and E. Choukse, “DynamoLLM: Designing LLM Inference Clusters for Performance and Energy Efficiency,” Aug. 01, 2024, _arXiv_: arXiv:2408.00741. doi: [10.48550/arXiv.2408.00741](https://doi.org/10.48550/arXiv.2408.00741).
 
