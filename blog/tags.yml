@@ -1,4 +1,7 @@
-facebook:
-  label: Facebook
-  permalink: /facebook
-  description: Facebook tag description
+code:
+  label: Code
+  permalink: /code
+
+llm:
+  label: LLM
+  permalink: /llm
