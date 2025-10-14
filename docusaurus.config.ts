@@ -5,7 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'My Site',
+  title: 'Patrick\'s Site',
   tagline: 'Dinosaurs are cool',
   favicon: 'img/favicon.ico',
 
@@ -15,7 +15,7 @@ const config: Config = {
   },
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
+  url: 'http://patrick-blog-liard.vercel.app/',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -40,11 +40,10 @@ const config: Config = {
       'classic',
       {
         docs: {
-          sidebarPath: './sidebars.ts',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          path: 'content/paper', // ✅ 新的文档文件夹路径
+          sidebarPath: './sidebars.ts',     // 侧边栏文件（可以不变，也可以改名）
+          routeBasePath: 'paper',   // ✅ 新的 URL 前缀：不再是 /docs，而是 /documentation
+          editUrl: 'https://github.com/pengtuli/patrick-blog/tree/main/content/paper',
         },
         blog: {
           showReadingTime: true,
@@ -55,7 +54,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/pengtuli/patrick-blog/tree/main/',
           // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
@@ -68,6 +67,32 @@ const config: Config = {
     ],
   ],
 
+  // add /leetcode and /learning
+    plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'learning',
+        path: 'content/learning',
+        routeBasePath: 'learning', // URL 前缀：/learning/*
+        sidebarPath: './sidebars.ts', // 独立侧边栏
+        editUrl:
+          'https://github.com/pengtuli/patrick-blog/tree/main/content',
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'leetcode',
+        path: 'content/leetcode',
+        routeBasePath: 'leetcode', // URL 前缀：/leetcode/*
+        sidebarPath: './sidebars.ts', // 独立侧边栏
+        editUrl:
+          'https://github.com/pengtuli/patrick-blog/tree/main/content',
+      },
+    ],
+  ],
+
   themeConfig: {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
@@ -75,7 +100,7 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'My Site',
+      title: 'Patrick\'s Site',
       logo: {
         alt: 'My Site Logo',
         src: 'img/logo.svg',
@@ -83,13 +108,27 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          sidebarId: 'paperSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Awesome Paper',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'learningSidebar',
+          position: 'left',
+          label: 'Learning',
+          docsPluginId: 'learning'
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'leetcodeSidebar',
+          position: 'left',
+          label: 'Leetcode',
+          docsPluginId: 'leetcode'
         },
         {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/pengtuli/patrick-blog',
           label: 'GitHub',
           position: 'right',
         },
@@ -97,48 +136,31 @@ const config: Config = {
     },
     footer: {
       style: 'dark',
-      links: [
-        {
-          title: 'Docs',
-          items: [
-            {
-              label: 'Tutorial',
-              to: '/docs/intro',
-            },
-          ],
-        },
-        {
-          title: 'Community',
-          items: [
-            {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-            },
-            {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'X',
-              href: 'https://x.com/docusaurus',
-            },
-          ],
-        },
-        {
-          title: 'More',
-          items: [
-            {
-              label: 'Blog',
-              to: '/blog',
-            },
-            {
-              label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
-            },
-          ],
-        },
-      ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      // links: [
+      //   {
+      //     title: 'Docs',
+      //     items: [
+      //       {
+      //         label: 'Tutorial',
+      //         to: '/docs/intro',
+      //       },
+      //     ],
+      //   },
+      //   {
+      //     title: 'More',
+      //     items: [
+      //       {
+      //         label: 'Blog',
+      //         to: '/blog',
+      //       },
+      //       {
+      //         label: 'GitHub',
+      //         href: 'https://github.com/facebook/docusaurus',
+      //       },
+      //     ],
+      //   },
+      // ],
+      copyright: `Copyright © ${new Date().getFullYear()} Patrick Knowledge Library, Inc. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,

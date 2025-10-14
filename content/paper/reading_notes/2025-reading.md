@@ -82,14 +82,18 @@ deepseek的萤火AI系统的设计，主要介绍了cost-effective的AI-HPC设�
 
 ## 2025-05
 
-- [InstInfer: In-Storage Attention Offloading for Cost-Effective Long-Context LLM Inference](http://arxiv.org/pdf/2409.04992v1.pdf). Xiurui Pan, Endian Li, Qiao Li, Shengwen Liang, Yizhou Shan, Ke Zhou, Yingwei Luo, Xiaolin Wang, Jie Zhang. Arxiv'2024
-
-- [An I/O Characterizing Study of Offloading LLM Models and KV Caches to NVMe SSD](https://dl.acm.org/doi/pdf/10.1145/3719330.3721230). Ren Zebin, Doekemeijer Krijn, De Matteis Tiziano, Pinto Christian, Stoica Radu, Trivedi Animesh. CHEOPS’25
-
-- Serverless DL Serving [Medusa: Accelerating Serverless LLM Inference with Materialization](https://dl.acm.org/doi/pdf/10.1145/3669940.3707285). Zeng Shaoxun, Xie Minhui, Gao Shiwei, Chen Youmin, Lu Youyou. ASPLOS'25
-
 - LLM serving, preemptive scheduling, memory offload, nvlink [Aqua: Network-Accelerated Memory Offloading for LLMs in Scale-Up GPU Domains](https://dl.acm.org/doi/pdf/10.1145/3676641.3715983). Vijaya Kumar Abhishek, Antichi Gianni, Singh Rachee. ASPLOS'25
 
 在serving场景下，显存是瓶颈。所以对于传统的FCFS的调度方法下（vllm），当rps激增时，会导致高TTFT的问题。而公平调度则需交换上下文到DRAM，受PCIE瓶颈影响；scale up，受限于容器启动时间。如今一个节点变得越来越大，如NVL72，因此一个节点内运行多种ML服务是可行的（cv,audio,nlp），而这些服务所需的显存不同，因此本文的核心思想是在单个节点内，将GPU分成生产者与消费者，消费者通过NVLINK将上下文动态卸载到生产者的显存里，开销小，因此可以充分利用显存，同时确保LLM serve的低ttft与tbt。
 
 实现上主要是一些工程上的东西，较为简单。包括profile离线区分生产者与消费者；placer利用最优化问题求解模型放置于生产者消费者配对的问题；lib则抽象出aqua tensor，对推理框架透明，实现了调度的算法。同时对于调度器实现了公平调度算法，调度prefill与decode task。
+
+## 2025-10
+
+> `agent serve` `Arxiv'2509` [Batch Query Processing and Optimization for Agentic Workflows](https://arxiv.org/pdf/2509.02121). Junyi Shen, Noppanat Wadlom, Yao Lu
+
+- 核心思想
+- insight
+- 核心方法
+- 实验
+- 评价

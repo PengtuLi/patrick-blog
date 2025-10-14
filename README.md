@@ -2,11 +2,7 @@
 
 Hi all, thank you for visiting here ;-)
 
-### Changelogs
-
-- 07/2025: Create this repo.
-
-### License
+`License`
 
 Released under the **MIT License**.
 
