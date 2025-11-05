@@ -50,6 +50,9 @@ const config: Config = {
             "https://github.com/pengtuli/patrick-blog/tree/main/content/paper",
           remarkPlugins: [remarkMath],
           rehypePlugins: [rehypeKatex],
+          numberPrefixParser(filename) {
+            return { numberPrefix: undefined, filename };
+          },
         },
         blog: {
           showReadingTime: true,
