@@ -5,3 +5,39 @@ code:
 llm:
   label: LLM
   permalink: /llm
+
+linux:
+  label: Linux
+  permalink: /linux
+
+pl:
+  label: PL
+  permalink: /pl
+
+cpp:
+  label: C++
+  permalink: /cpp
+
+proxy:
+  label: Peoxy
+  permalink: /proxy
+
+ssh:
+  label: SSH
+  permalink: /ssh
+
+career:
+  label: Career
+  permalink: /career
+
+neovim:
+  label: NeoVim
+  permalink: /neovim
+
+eng:
+  label: Eng
+  permalink: /eng
+
+think:
+  label: Thinking
+  permalink: /think

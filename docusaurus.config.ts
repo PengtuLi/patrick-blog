@@ -18,7 +18,7 @@ const config: Config = {
   },
 
   // Set the production url of your site here
-  url: "http://patrick-blog-liard.vercel.app/",
+  url: "http://blog-liard.vercel.app/",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: "/",
@@ -46,8 +46,7 @@ const config: Config = {
           path: "content/paper", // ✅ 新的文档文件夹路径
           sidebarPath: "./sidebars.ts", // 侧边栏文件（可以不变，也可以改名）
           routeBasePath: "paper", // ✅ 新的 URL 前缀：不再是 /docs，而是 /documentation
-          editUrl:
-            "https://github.com/pengtuli/patrick-blog/tree/main/content/paper",
+          editUrl: "https://github.com/pengtuli/blog/tree/main/content/paper",
           remarkPlugins: [remarkMath],
           rehypePlugins: [rehypeKatex],
           numberPrefixParser(filename) {
@@ -56,13 +55,15 @@ const config: Config = {
         },
         blog: {
           showReadingTime: true,
+          blogSidebarCount: "ALL",
+          postsPerPage: "ALL",
           feedOptions: {
             type: ["rss", "atom"],
             xslt: true,
           },
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl: "https://github.com/pengtuli/patrick-blog/tree/main/",
+          editUrl: "https://github.com/pengtuli/blog/tree/main/",
           // Useful options to enforce blogging best practices
           onInlineTags: "warn",
           onInlineAuthors: "warn",
@@ -87,7 +88,7 @@ const config: Config = {
         path: "content/learning",
         routeBasePath: "learning", // URL 前缀：/learning/*
         sidebarPath: "./sidebars.ts", // 独立侧边栏
-        editUrl: "https://github.com/pengtuli/patrick-blog/tree/main/content",
+        editUrl: "https://github.com/pengtuli/blog/tree/main/content",
         remarkPlugins: [remarkMath],
         rehypePlugins: [rehypeKatex],
       },
@@ -99,7 +100,7 @@ const config: Config = {
         path: "content/leetcode",
         routeBasePath: "leetcode", // URL 前缀：/leetcode/*
         sidebarPath: "./sidebars.ts", // 独立侧边栏
-        editUrl: "https://github.com/pengtuli/patrick-blog/tree/main/content",
+        editUrl: "https://github.com/pengtuli/blog/tree/main/content",
         remarkPlugins: [remarkMath],
         rehypePlugins: [rehypeKatex],
       },
@@ -141,7 +142,7 @@ const config: Config = {
         },
         { to: "/blog", label: "Blog", position: "left" },
         {
-          href: "https://github.com/pengtuli/patrick-blog",
+          href: "https://github.com/pengtuli/blog",
           label: "GitHub",
           position: "right",
         },
