@@ -38,15 +38,16 @@ A lightweight vLLM implementation built from scratch.
 
 ### stand higher
 
-实现serve过程？
-
-cuda kernel
+cuda kernel 替换
 
 other parallel
 
 bench mark vs llm.swift
 
 implement using minitorch?
+
+实现serve过程？continus batching
+chunk prefill 怎么实现
 
 ### check
 
